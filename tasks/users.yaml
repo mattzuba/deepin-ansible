@@ -1,4 +1,0 @@
-- name: Create ansible Sser
-  user: name=ansible uid=900
-- name: Copy sudoers
-  copy: src=files/sudoers dest=/etc/sudoers.d/02_ansible owner=root group=root mode=0440
