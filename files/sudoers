@@ -1,0 +1,2 @@
+ansible ALL=(ALL) NOPASSWD: ALL
+mzuba All=(ALL:ALL) NOPASSWD: ALL

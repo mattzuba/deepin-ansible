@@ -1,0 +1,2 @@
+- name: Install CRON Job (ansible-pull)
+  cron: user="ansible" name="ansible provision" minute="*/10" job="/usr/bin/ansible-pull -o -U https://github.com/mattzuba/deepin-ansible.git > /dev/null"
