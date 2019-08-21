@@ -3,9 +3,8 @@
   cron:
     name: ansible provision
     user: "{{ user }}"
-    minute: "*/15"
-    disabled: yes
-    job: ~{{ user }}/.local/bin/ansible-pull -o -d {{ work_dir }} -U {{ repo_url }} >> {{ log_file }} 2>&1
+    minute: "*/10"
+    job: ~{{ user }}/.local/bin/ansible-pull -o -d {{ ansible.work_dir }} -U {{ ansible.repo_url }} >> {{ ansible.log_file }} 2>&1
 
 - name: Add github3.py package to ansible
   pip:
