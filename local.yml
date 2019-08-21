@@ -10,7 +10,7 @@
       become: yes
   roles:
     - {role: "general-packages", tags: "general-packages", become: yes}
-#    - {role: "kerberos", tags: "kerberos", become: yes}
+    - {role: "kerberos", tags: "kerberos", become: yes}
     - {role: "dev-environment", tags: "dev-environment", become: yes}
     - {role: "user-stuff", tags: "user-stuff"}
     - role: gantsign.oh-my-zsh
