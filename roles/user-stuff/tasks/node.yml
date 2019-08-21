@@ -5,7 +5,7 @@
     warn: false
 
 - name: Install latest nvm
-  shell: "~{{ user }}/.nvm/nvm.sh && nvm install --lts --latest-npm"
+  shell: ". ~{{ user }}/.nvm/nvm.sh && nvm install --lts --latest-npm"
   args:
     creates: "~{{ user }}/.nvm/default"
     warn: false
