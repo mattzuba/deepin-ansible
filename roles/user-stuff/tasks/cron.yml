@@ -1,0 +1,37 @@
+- name: Anacrontab file
+  template:
+    src: anacrontab.j2
+    dest: ~{{ user }}/.local/etc/anacrontab
+
+- name: Create cron directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - ~{{ user }}/.local/var/spool/anacron
+    - ~{{ user }}/.local/etc/cron.daily
+    - ~{{ user }}/.local/etc/cron.weekly
+    - ~{{ user }}/.local/etc/cron.monthly
+
+- name: Copy anacron.service
+  copy:
+    src: "{{ item }}"
+    dest: ~{{ user }}/.config/systemd/user/
+  loop:
+    - anacron.service
+    - anacron.timer
+
+- name: Enable anacron
+  systemd:
+    name: anacron.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    scope: user
+
+- name: Logrotate
+  template:
+    src: logrotate.cron.j2
+    dest: ~{{ user }}/.local/etc/cron.daily/logrotate
+    mode: "0755"

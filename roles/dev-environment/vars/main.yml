@@ -1,0 +1,4 @@
+---
+composer_version: null
+local_bin: /usr/local/bin
+composer_bin: "{{ local_bin }}/composer"

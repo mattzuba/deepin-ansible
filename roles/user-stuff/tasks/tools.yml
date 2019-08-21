@@ -1,0 +1,106 @@
+- name: Install saml2aws
+  unarchive:
+    src: https://github.com/Versent/saml2aws/releases/download/v2.16.0/saml2aws_2.16.0_linux_amd64.tar.gz
+    dest: "{{ local_bin }}"
+    creates: "{{ local_bin }}/saml2aws"
+    remote_src: yes
+
+- name: Install Etcher
+  get_url:
+    url: https://github.com/balena-io/etcher/releases/download/v1.5.53/balenaEtcher-1.5.53-x64.AppImage
+    dest: "{{ local_bin }}/etcher"
+    mode: "0755"
+    checksum: sha512:3d9ccec182b89837ead7c38e8331fbbef7a161bae6ad62ffdfae0431b6a7638836cd040e7b0015726d6c6510c3374e55cf10ea6cdc40ef7234a28b2d57294f6b
+
+- name: Install phpcs
+  get_url:
+    url: https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar
+    dest: "{{ local_bin }}/phpcs"
+    mode: "0755"
+    checksum: sha256:6966a9d41099caab6fe63728f20ff0dba4c9c5a2b157c735ece98b6367e16942
+
+- name: Install php-cs-fixer
+  get_url:
+    url: https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.15.1/php-cs-fixer.phar
+    dest: "{{ local_bin }}/php-cs-fixer"
+    mode: "0755"
+    checksum: sha256:8c56b58fd3733f08c160fe60b18536f904f93088954c518b7c0bc96de26c7861
+
+- name: Install phploc
+  get_url:
+    url: https://phar.phpunit.de/phploc.phar
+    dest: "{{ local_bin }}/phploc"
+    mode: "0755"
+    checksum: sha256:1399c8025f87bc6021697ce3476ebc6e57c647e47b22d4558ab82784af48b1d8
+
+- name: Install phpmd
+  get_url:
+    url: https://github.com/phpmd/phpmd/releases/download/2.7.0/phpmd.phar
+    dest: "{{ local_bin }}/phpmd"
+    mode: "0755"
+    checksum: sha256:06dca1d8d77eadde31ddb3e60299a1e53363039e94bd691c3e23639f5f4730b0
+
+- name: Install psysh
+  get_url:
+    url: https://psysh.org/psysh
+    dest: "{{ local_bin }}/psysh"
+    mode: "0755"
+    checksum: sha256:be156cc3a495b0f3ba7581dafd5af037ee1c3f41be0eebc954ee1a7107868452
+
+- name: Install conky
+  get_url:
+    url: https://github.com/brndnmtthws/conky/releases/download/v1.11.5/conky-x86_64.AppImage
+    dest: "{{ local_bin }}/conky"
+    mode: "0755"
+    checksum: sha256:f2b2e3d9e9c1835ccde0551dbbc1c574046008fe784e6880167f8702f26fffc2
+
+- name: Install caprine
+  get_url:
+    url: https://github.com/sindresorhus/caprine/releases/download/v2.36.0/caprine-2.36.0-x86_64.AppImage
+    dest: "{{ local_bin }}/caprine"
+    mode: "0755"
+    checksum: sha256:cac197a9db0a84d50300b3c841287f2bfbe142ca229c1f57e7ad7b7b6d8b5438
+
+- name: Install drone cli
+  unarchive:
+    src: https://github.com/drone/drone-cli/releases/download/v1.1.4/drone_linux_amd64.tar.gz
+    dest: "{{ local_bin }}"
+    creates: "{{ local_bin }}/drone"
+    remote_src: yes
+
+- name: Install httpie
+  pip:
+    virtualenv: "{{ venvs }}/httpie"
+    name: httpie
+
+- name: Install AWS CLI Tools
+  pip:
+    virtualenv: "{{ venvs }}/aws"
+    name:
+      - awscli
+      - awsebcli
+      - aws-shell
+
+- name: Install docker-compose
+  pip:
+    virtualenv: "{{ venvs }}/docker-compose"
+    name: docker-compose
+
+- name: Link pip tools
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - {src: "{{ venvs }}/httpie/bin/http", dest: "{{ local_bin }}/http"}
+    - {src: "{{ venvs }}/aws/bin/aws", dest: "{{ local_bin }}/aws"}
+    - {src: "{{ venvs }}/aws/bin/aws-shell", dest: "{{ local_bin }}/aws-shell"}
+    - {src: "{{ venvs }}/aws/bin/eb", dest: "{{ local_bin }}/eb"}
+    - {src: "{{ venvs }}/docker-compose/bin/docker-compose", dest: "{{ local_bin }}/docker-compose"}
+
+- name: AWS Docker Credential Helper
+  get_url:
+    url: https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.3.1/linux-amd64/docker-credential-ecr-login
+    dest: "{{ local_bin }}/docker-credential-ecr-login"
+    checksum: sha256:https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.3.1/linux-amd64/docker-credential-ecr-login.sha256
+    mode: "0755"

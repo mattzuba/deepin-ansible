@@ -1,0 +1,41 @@
+- name: Install ssmtp
+  apt:
+    name: ssmtp
+
+- name: Configure ssmtp
+  ini_file:
+    path: /etc/ssmtp/ssmtp.conf
+    section: null
+    option: mailhub
+    value: 127.0.0.1:1025
+
+- name: Install mailhog
+  get_url:
+    url: https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64
+    dest: /usr/local/bin/mailhog
+    checksum: sha256:ba921e04438e176c474d533447ae64707ffcdd1230f0153f86cb188d348f25c0
+    mode: '0755'
+
+- name: Mailhog systemd unit
+  copy:
+    src: mailhog.service
+    dest: /lib/systemd/system/mailhog.service
+
+- name: Mailhog config
+  copy:
+    src: mailhog.json
+    dest: /etc/mailhog.json
+
+- name: Mailhog run directory
+  file:
+    path: /var/run/mailhog
+    state: directory
+    owner: nobody
+    group: nogroup
+
+- name: Enable mailhog service
+  systemd:
+    name: mailhog
+    daemon_reload: yes
+    enabled: yes
+    state: started

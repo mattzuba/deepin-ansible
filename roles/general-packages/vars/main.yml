@@ -1,0 +1,2 @@
+---
+saml2aws_bin: "{{ local_bin }}/saml2aws"

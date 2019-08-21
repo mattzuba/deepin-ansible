@@ -1,13 +1,28 @@
 - hosts: localhost
-  become: true
+  vars_files:
+    - .env.yml
+    - global_vars.yml
   pre_tasks:
     - name: Update Repositories
-      apt: 
+      apt:
         update_cache: yes
       changed_when: False
-
-  tasks:
-    - include: tasks/users.yml
-    - include: tasks/packages.yml
-    - include: tasks/cron.yml
-    - include: tasks/dconf.yml
+      become: yes
+  roles:
+    - {role: "general-packages", tags: "general-packages", become: yes}
+#    - {role: "kerberos", tags: "kerberos", become: yes}
+    - {role: "dev-environment", tags: "dev-environment", become: yes}
+    - {role: "user-stuff", tags: "user-stuff"}
+    - role: gantsign.oh-my-zsh
+      tags: oh-my-zsh
+      users:
+        - username: "{{ ansible_env.USER }}"
+          oh_my_zsh:
+            theme: agnoster
+            plugins:
+              - git
+              - aws
+              - docker
+              - npm
+              - pip
+              - python

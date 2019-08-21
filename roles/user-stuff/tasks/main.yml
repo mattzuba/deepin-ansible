@@ -1,0 +1,38 @@
+---
+- import_tasks: cron.yml
+- import_tasks: node.yml
+- import_tasks: tools.yml
+- import_tasks: jetbrains.yml
+
+- name: Copy meld helper
+  copy:
+    src: meld
+    dest: "~{{ user }}/.local/bin/meld"
+    mode: "0755"
+
+- name: Copy xdebug helper
+  copy:
+    src: xdebug
+    dest: "~{{ user }}/.local/bin/xdebug"
+    mode: "0755"
+
+- name: Copy sudoers
+  template: src=sudoers.j2 dest=/etc/sudoers.d/02_sudoers owner=root group=root mode=0440
+  become: yes
+
+- name: Copy logrotate.conf
+  template:
+    src: logrotate.conf.j2
+    dest: ~{{ user }}/.local/etc/logrotate.conf
+
+- name: Create logrotate.d directory
+  file:
+    path: ~{{ user }}/.local/etc/logrotate.d
+    state: directory
+    mode: "0755"
+
+- name: Setup log directory
+  file:
+    path: ~{{ user }}/.local/var/log
+    state: directory
+    mode: "0755"

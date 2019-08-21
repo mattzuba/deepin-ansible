@@ -1,0 +1,16 @@
+[Unit]
+Description=Mailhog
+After=syslog.target network.target
+
+[Service]
+Environment=MH_OUTGOING_SMTP=/etc/mailhog.json
+Environment=MH_STORAGE=maildir
+Environment=MH_MAILDIR_PATH=/var/run/mailhog
+User=nobody
+Group=nogroup
+ExecStart=/usr/local/bin/mailhog
+StandardOutput=journal
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

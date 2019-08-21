@@ -1,0 +1,7 @@
+---
+- import_tasks: apache.yml
+- import_tasks: php.yml
+- import_tasks: mariadb.yml
+- import_tasks: email.yml
+- import_tasks: dnsmasq.yml
+- import_tasks: mkcert.yml

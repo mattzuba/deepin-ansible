@@ -1,0 +1,27 @@
+- name: Install Apache
+  apt:
+    name:
+      - apache2
+  register: aptapache2
+
+- name: Enable rewrite
+  apache2_module:
+    name: rewrite
+
+- name: Enable proxy
+  apache2_module:
+    name: proxy_fcgi
+
+- name: Enable maco
+  apache2_module:
+    name: macro
+
+- name: Enable info
+  apache2_module:
+    name: info
+
+- name: Restart Apache
+  systemd:
+    name: apache2
+    state: restarted
+  when: aptapache2.changed

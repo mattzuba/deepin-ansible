@@ -1,0 +1,12 @@
+[libdefaults]
+default_realm = {{ sssd_domain }}
+
+[realms]
+{{ sssd_domain }} = {
+    kdc = {{ sssd_kdc }}
+    admin_server = {{ sssd_admin_server }}
+}
+
+[domain_realm]
+.{{ sssd_domain | lower }} = {{ sssd_domain }}
+{{ sssd_domain | lower }} = {{ sssd_domain }}

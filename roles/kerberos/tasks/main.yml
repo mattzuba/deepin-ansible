@@ -1,0 +1,88 @@
+---
+- name: SSSD Packages
+  apt:
+    name:
+      - adcli
+      - krb5-user
+      - samba
+      - sssd
+
+- name: Create sssd.conf
+  template:
+    src: etc_sssd_sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Create sssd gwaz.conf
+  template:
+    src: etc_sssd_conf.d_gwaz.conf.j2
+    dest: /etc/sssd/conf.d/gwaz.conf
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Create krb5.conf
+  template:
+    src: etc_krb5.conf.j2
+    dest: /etc/krb5.conf
+    backup: yes
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Disable sss on sudoers nsswitch
+  replace:
+    dest: /etc/nsswitch.conf
+    regexp: '^(sudoers:\s+files) sss'
+    replace: '\1'
+    backup: yes
+
+  # https://github.com/ansible/ansible/issues/60497
+- name: Add a comment to deepin-auth-keyboard for next step
+  lineinfile:
+    path: /etc/pam.d/deepin-auth-keyboard
+    line: "# deepin-auth-keyboard"
+    insertbefore: BOF
+
+- name: Remove lsass from Deepin pam.d
+  pamd:
+    name: deepin-auth-keyboard
+    type: auth
+    control: "[success=2 default=ignore]"
+    module_path: pam_lsass.so
+    state: absent
+
+- name: Adjust pam_unix in Deepin pam.d
+  pamd:
+    name: deepin-auth-keyboard
+    type: auth
+    control: "[success=1 default=ignore]"
+    module_path: pam_unix.so
+    new_control: "[success=2 default=ignore]"
+
+- name: Add sss to Deepin pam.d
+  pamd:
+    name: deepin-auth-keyboard
+    type: auth
+    control: "[success=2 default=ignore]"
+    module_path: pam_unix.so
+    new_type: auth
+    new_control: "[success=1 default=ignore]"
+    new_module_path: pam_sss.so
+    module_arguments: use_first_pass
+    state: after
+
+- name: restart sssd
+  service:
+    name: sssd
+    state: restarted
+
+- name: Connect to AD
+  expect:
+    command: adcli join --domain {{ sssd_domain }} --login-user {{ sssd_auth_user }} --domain-ou "{{ sssd_ou }}" --os-name "{{ sssd_os }}" --os-version "{{ sssd_os_version }}"
+    creates: /etc/krb5.keytab
+    responses:
+      (?i)password: "{{ sssd_auth_passwd }}"
+  no_log: true

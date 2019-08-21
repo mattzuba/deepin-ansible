@@ -1,0 +1,6 @@
+- name: Install mkcert
+  get_url:
+    url: https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64
+    dest: /usr/local/bin/mkcert
+    checksum: sha256:98fcf449d5a34c644bce7d3cbe2db86f43cb192f404fa1318fb449f463c05b7d
+    mode: '0755'

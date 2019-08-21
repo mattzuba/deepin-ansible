@@ -1,0 +1,62 @@
+- import_tasks: flatpak.yml
+- import_tasks: snaps.yml
+
+- name: Install dirmngr
+  apt:
+    name: dirmngr
+
+- name: Slack Key
+  apt_key:
+    url: https://packagecloud.io/slacktechnologies/slack/gpgkey
+
+- name: Docker Key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+
+- name: VirtualBox Key
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+- name: Slack Repo
+  apt_repository:
+    repo: deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+    filename: slack
+
+- name: Docker Repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+    filename: docker
+
+- name: VirtualBox Repo
+  apt_repository:
+    repo: deb http://download.virtualbox.org/virtualbox/debian stretch contrib
+    filename: virtualbox
+
+- name: Install Chrome
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+- name: Install Packages
+  apt:
+    name:
+      - htop
+      - dconf-editor
+      - rsyslog
+      - slack-desktop
+      - docker-ce
+      - virtualbox-6.0
+      - seahorse
+      - fonts-powerline
+      - anacron
+
+- name: Source Code Pro fonts
+  git:
+    depth: 1
+    dest: /usr/share/fonts/opentype/scp
+    repo: https://github.com/adobe-fonts/source-code-pro.git
+    refspec: refs/heads/release
+  register: scp
+
+- name: Rebuild font-cache
+  command: fc-cache -f -v
+  when: scp.changed

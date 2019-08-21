@@ -11,12 +11,4 @@
 - name: Install Packages
   apt:
     name:
-      - htop
-      - zsh
-      - dconf-editor
       - mariadb-server
-
-- name: Install Slack
-  apt:
-    deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
-

@@ -1,0 +1,17 @@
+- name: Install snapd
+  apt:
+    name: snapd
+
+- name: Install Snap Core
+  command: snap install core
+
+- name: Install Non-Classic Snaps
+  snap:
+    name:
+      - postman
+      - gimp
+
+- name: Install Sublime Snap
+  snap:
+    name: sublime-text
+    classic: yes

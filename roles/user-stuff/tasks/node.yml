@@ -1,0 +1,11 @@
+- name: Install nvm
+  shell: wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  args:
+    creates: "~{{ user }}/.nvm/nvm.sh"
+    warn: false
+
+- name: Install latest nvm
+  shell: "~{{ user }}/.nvm/nvm.sh && nvm install --lts --latest-npm"
+  args:
+    creates: "~{{ user }}/.nvm/default"
+    warn: false
