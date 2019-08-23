@@ -73,6 +73,11 @@
     virtualenv: "{{ venvs }}/httpie"
     name: httpie
 
+- name: Install speedtest-cli
+  pip:
+    virtualenv: "{{ venvs }}/speedtest"
+    name: speedtest-cli
+
 - name: Install AWS CLI Tools
   pip:
     virtualenv: "{{ venvs }}/aws"
@@ -93,6 +98,7 @@
     state: link
   loop:
     - {src: "{{ venvs }}/httpie/bin/http", dest: "{{ local_bin }}/http"}
+    - {src: "{{ venvs }}/speedtest/bin/speedtest-cli", dest: "{{ local_bin }}/speedtest-cli"}
     - {src: "{{ venvs }}/aws/bin/aws", dest: "{{ local_bin }}/aws"}
     - {src: "{{ venvs }}/aws/bin/aws-shell", dest: "{{ local_bin }}/aws-shell"}
     - {src: "{{ venvs }}/aws/bin/eb", dest: "{{ local_bin }}/eb"}
