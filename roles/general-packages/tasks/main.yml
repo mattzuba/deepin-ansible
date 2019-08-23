@@ -43,6 +43,7 @@
 - name: Install Packages
   apt:
     name:
+      - curl
       - htop
       - dconf-editor
       - rsyslog
