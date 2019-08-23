@@ -4,8 +4,9 @@
     creates: "~{{ user }}/.nvm/nvm.sh"
     warn: false
 
-- name: Install latest nvm
-  shell: ". ~{{ user }}/.nvm/nvm.sh && nvm install --lts --latest-npm"
+- name: Install latest node
+  shell: "nvm install --lts --latest-npm"
   args:
-    creates: "~{{ user }}/.nvm/default"
+    creates: "~{{ user }}/.nvm/versions/node"
     warn: false
+    executable: /bin/bash
