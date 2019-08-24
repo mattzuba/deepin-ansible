@@ -1,0 +1,9 @@
+- name: Disable Services
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  loop:
+    - smbd
+    - nmbd
+
