@@ -78,6 +78,11 @@
     virtualenv: "{{ venvs }}/speedtest"
     name: speedtest-cli
 
+- name: Install undervolt
+  pip:
+    virtualenv: "{{ venvs }}/undervolt"
+    name: undervolt
+
 - name: Install AWS CLI Tools
   pip:
     virtualenv: "{{ venvs }}/aws"
@@ -99,6 +104,7 @@
   loop:
     - {src: "{{ venvs }}/httpie/bin/http", dest: "{{ local_bin }}/http"}
     - {src: "{{ venvs }}/speedtest/bin/speedtest-cli", dest: "{{ local_bin }}/speedtest-cli"}
+    - {src: "{{ venvs }}/undervolt/bin/undervolt", dest: "{{ local_bin }}/undervolt"}
     - {src: "{{ venvs }}/aws/bin/aws", dest: "{{ local_bin }}/aws"}
     - {src: "{{ venvs }}/aws/bin/aws-shell", dest: "{{ local_bin }}/aws-shell"}
     - {src: "{{ venvs }}/aws/bin/eb", dest: "{{ local_bin }}/eb"}
