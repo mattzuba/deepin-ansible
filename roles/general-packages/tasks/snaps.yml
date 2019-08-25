@@ -15,3 +15,8 @@
   snap:
     name: sublime-text
     classic: yes
+
+- name: Install fwupd tool
+  snap:
+    name: fwupd
+    classic: yes
