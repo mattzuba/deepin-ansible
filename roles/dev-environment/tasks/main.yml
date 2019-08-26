@@ -5,3 +5,8 @@
 - import_tasks: email.yml
 - import_tasks: dnsmasq.yml
 - import_tasks: mkcert.yml
+
+- name: Update sysctl
+  copy:
+    src: sysctl-local.conf
+    dest: /etc/sysctl.d/local.conf
