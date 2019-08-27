@@ -41,6 +41,10 @@
   apt:
     deb: https://release.gitkraken.com/linux/gitkraken-amd64.deb
 
+- name: Install Teamviewer
+  apt:
+    deb: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+
 - name: Install Packages
   apt:
     name:
