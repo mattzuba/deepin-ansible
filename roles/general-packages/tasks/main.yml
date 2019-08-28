@@ -58,6 +58,7 @@
       - seahorse
       - fonts-powerline
       - anacron
+      - telnet
 
 - name: Source Code Pro fonts
   git:
