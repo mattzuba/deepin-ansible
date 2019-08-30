@@ -1,6 +1,7 @@
 - import_tasks: flatpak.yml
 - import_tasks: snaps.yml
 - import_tasks: disable-services.yml
+- import_tasks: undervolt.yml
 
 - name: Install dirmngr
   apt:
