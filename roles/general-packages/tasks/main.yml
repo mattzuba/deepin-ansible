@@ -72,3 +72,8 @@
 - name: Rebuild font-cache
   command: fc-cache -f -v
   when: scp.changed
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+    executable: pip3
