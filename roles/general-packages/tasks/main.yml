@@ -59,6 +59,7 @@
       - fonts-powerline
       - anacron
       - telnet
+      - netcat
 
 - name: Source Code Pro fonts
   git:
