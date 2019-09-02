@@ -60,6 +60,7 @@
       - anacron
       - telnet
       - netcat
+      - tcpdump
 
 - name: Source Code Pro fonts
   git:
