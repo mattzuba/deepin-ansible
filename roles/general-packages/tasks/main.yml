@@ -81,3 +81,13 @@
 
 - import_tasks: undervolt.yml
 
+- name: Install mercurial
+  pip:
+    virtualenv: /opt/mercurial
+    name: merucrial
+
+- name: Link merucrial
+  file:
+    src: /opt/merucrial/bin/hg
+    dest: /usr/local/bin/hg
+    state: link
