@@ -84,6 +84,7 @@
 - name: Install mercurial
   pip:
     virtualenv: /opt/mercurial
+    virtualenv_python: python
     name: mercurial
 
 - name: Link mercurial
