@@ -1,4 +1,4 @@
 #!/bin/sh
 
 test -x /usr/sbin/logrotate || exit 0
-/usr/sbin/logrotate ~{{ user }}/.local/etc/logrotate.conf
+/usr/sbin/logrotate -s /home/{{ user }}/.local/var/lib/logrotate/status /home/{{ user }}/.local/etc/logrotate.conf
