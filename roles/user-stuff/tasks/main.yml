@@ -32,6 +32,12 @@
     state: directory
     mode: "0755"
 
+- name: Create logrotate spool directory
+  file:
+    path: ~{{ user }}/.local/var/lib/logrotate
+    state: directory
+    mode: "0755"
+
 - name: Setup log directory
   file:
     path: ~{{ user }}/.local/var/log
