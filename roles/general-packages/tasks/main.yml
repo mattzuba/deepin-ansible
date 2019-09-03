@@ -84,10 +84,10 @@
 - name: Install mercurial
   pip:
     virtualenv: /opt/mercurial
-    name: merucrial
+    name: mercurial
 
-- name: Link merucrial
+- name: Link mercurial
   file:
-    src: /opt/merucrial/bin/hg
+    src: /opt/mercurial/bin/hg
     dest: /usr/local/bin/hg
     state: link
