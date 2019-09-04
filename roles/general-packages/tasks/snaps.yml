@@ -10,7 +10,6 @@
     name:
       - postman
       - gimp
-      - sftpclient
 
 - name: Install Sublime Snap
   snap:
