@@ -1,0 +1,34 @@
+- name: Download hub
+  unarchive:
+    src: https://github.com/github/hub/releases/download/v2.12.3/hub-linux-amd64-2.12.3.tgz
+    dest: /tmp
+    creates: "{{ local_bin }}/hub"
+    remote_src: yes
+  register: hub
+
+- name: Get hub dir
+  find:
+    path: /tmp
+    file_type: directory
+    pattern: hub-linux-*
+  register: hub_dir
+  when: hub.changed
+
+- name: Install hub
+  copy:
+    src: "{{ hub_dir.files[0].path }}/bin/hub"
+    dest: ~{{ user }}/.local/bin/hub
+    mode: "0755"
+  when: hub.changed
+
+- name: zsh hub plugin
+  file:
+    path: ~{{ user }}/.oh-my-zsh/custom/plugins/hub
+    state: directory
+    mode: "0755"
+
+- name: Install hub completions
+  copy:
+    src: "{{ hub_dir.files[0].path }}/etc/hub.zsh_completion"
+    dest: ~{{ user }}/.oh-my-zsh/custom/plugins/hub/_hub
+  when: hub.changed

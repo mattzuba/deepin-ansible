@@ -4,6 +4,7 @@
 - import_tasks: node.yml
 - import_tasks: tools.yml
 - import_tasks: jetbrains.yml
+- import_tasks: hub.yml
 
 - name: Copy meld helper
   copy:
