@@ -62,6 +62,7 @@
       - netcat
       - tcpdump
       - ruby
+      - ruby-dev
 
 - name: Source Code Pro fonts
   git:
