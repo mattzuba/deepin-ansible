@@ -63,6 +63,8 @@
       - tcpdump
       - ruby
       - ruby-dev
+      - inotify-tools
+      - moreutils
 
 - name: Source Code Pro fonts
   git:

@@ -11,23 +11,24 @@
 - name: Install Packages
   apt:
     name:
-      - php7.2-cli
-      - php7.2-fpm
-      - php7.2-dev
-      - php7.2-pgsql
-      - php7.2-sqlite3
-      - php7.2-gd
-      - php7.2-curl
-      - php7.2-imap
-      - php7.2-mysql
-      - php7.2-mbstring
-      - php7.2-xml
-      - php7.2-zip
-      - php7.2-bcmath
-      - php7.2-soap
-      - php7.2-intl
-      - php7.2-readline
-      - php7.2-ldap
+      - php7.3-cli
+      - php7.3-fpm
+      - php7.3-dev
+      - php7.3-pgsql
+      - php7.3-sqlite3
+      - php7.3-gd
+      - php7.3-curl
+      - php7.3-imap
+      - php7.3-mysql
+      - php7.3-mbstring
+      - php7.3-xml
+      - php7.3-zip
+      - php7.3-bcmath
+      - php7.3-soap
+      - php7.3-intl
+      - php7.3-readline
+      - php7.3-ldap
+      - php7.3-sybase
       - php5.6-cli
       - php5.6-fpm
       - php5.6-dev
@@ -45,6 +46,8 @@
       - php5.6-intl
       - php5.6-readline
       - php5.6-mcrypt
+      - php5.6-ldap
+      - php5.6-sybase
       - php-memcached
       - php-apcu
       - php-xdebug
@@ -56,20 +59,20 @@
 - name: Update php alternative
   alternatives:
     name: php
-    path: /usr/bin/php7.2
+    path: /usr/bin/php7.3
 
 - name: Update php-config alternative
   alternatives:
     name: php-config
-    path: /usr/bin/php-config7.2
+    path: /usr/bin/php-config7.3
 
 - name: Update phpize alternative
   alternatives:
     name: phpize
-    path: /usr/bin/phpize7.2
+    path: /usr/bin/phpize7.3
 
 - name: Enable PHP Apache conf
-  command: a2enconf php7.2-fpm
+  command: a2enconf php7.3-fpm
 
 - name: Update PHP config
   ini_file:
@@ -90,18 +93,18 @@
     - {version: "5.6", type: "fpm", section: "PHP", option: "post_max_size", value: "100M"}
     - {version: "5.6", type: "fpm", section: "Date", option: "date.timezone", value: "UTC"}
     - {version: "5.6", type: "fpm", section: "curl", option: "curl.cainfo", value: "/etc/ssl/certs/ca-certificates.crt"}
-    - {version: "7.2", type: "cli", section: "PHP", option: "error_reporting", value: "E_ALL"}
-    - {version: "7.2", type: "cli", section: "PHP", option: "display_errors", value: "On"}
-    - {version: "7.2", type: "cli", section: "PHP", option: "memory_limit", value: "512M"}
-    - {version: "7.2", type: "cli", section: "Date", option: "date.timezone", value: "UTC"}
-    - {version: "7.2", type: "cli", section: "curl", option: "curl.cainfo", value: "/etc/ssl/certs/ca-certificates.crt"}
-    - {version: "7.2", type: "fpm", section: "PHP", option: "error_reporting", value: "E_ALL"}
-    - {version: "7.2", type: "fpm", section: "PHP", option: "display_errors", value: "On"}
-    - {version: "7.2", type: "fpm", section: "PHP", option: "memory_limit", value: "512M"}
-    - {version: "7.2", type: "fpm", section: "PHP", option: "upload_max_filesize", value: "100M"}
-    - {version: "7.2", type: "fpm", section: "PHP", option: "post_max_size", value: "100M"}
-    - {version: "7.2", type: "fpm", section: "Date", option: "date.timezone", value: "UTC"}
-    - {version: "7.2", type: "fpm", section: "curl", option: "curl.cainfo", value: "/etc/ssl/certs/ca-certificates.crt"}
+    - {version: "7.3", type: "cli", section: "PHP", option: "error_reporting", value: "E_ALL"}
+    - {version: "7.3", type: "cli", section: "PHP", option: "display_errors", value: "On"}
+    - {version: "7.3", type: "cli", section: "PHP", option: "memory_limit", value: "512M"}
+    - {version: "7.3", type: "cli", section: "Date", option: "date.timezone", value: "UTC"}
+    - {version: "7.3", type: "cli", section: "curl", option: "curl.cainfo", value: "/etc/ssl/certs/ca-certificates.crt"}
+    - {version: "7.3", type: "fpm", section: "PHP", option: "error_reporting", value: "E_ALL"}
+    - {version: "7.3", type: "fpm", section: "PHP", option: "display_errors", value: "On"}
+    - {version: "7.3", type: "fpm", section: "PHP", option: "memory_limit", value: "512M"}
+    - {version: "7.3", type: "fpm", section: "PHP", option: "upload_max_filesize", value: "100M"}
+    - {version: "7.3", type: "fpm", section: "PHP", option: "post_max_size", value: "100M"}
+    - {version: "7.3", type: "fpm", section: "Date", option: "date.timezone", value: "UTC"}
+    - {version: "7.3", type: "fpm", section: "curl", option: "curl.cainfo", value: "/etc/ssl/certs/ca-certificates.crt"}
   when: aptphp.changed
 
 - name: Edit xdebug.ini
@@ -115,10 +118,10 @@
     - {version: "5.6", section: "xdebug", option: "xdebug.remote_connect_back", value: "1"}
     - {version: "5.6", section: "xdebug", option: "xdebug.remote_port", value: "9000"}
     - {version: "5.6", section: "xdebug", option: "xdebug.max_nesting_level", value: "512"}
-    - {version: "7.2", section: "xdebug", option: "xdebug.remote_enable", value: "1"}
-    - {version: "7.2", section: "xdebug", option: "xdebug.remote_connect_back", value: "1"}
-    - {version: "7.2", section: "xdebug", option: "xdebug.remote_port", value: "9000"}
-    - {version: "7.2", section: "xdebug", option: "xdebug.max_nesting_level", value: "512"}
+    - {version: "7.3", section: "xdebug", option: "xdebug.remote_enable", value: "1"}
+    - {version: "7.3", section: "xdebug", option: "xdebug.remote_connect_back", value: "1"}
+    - {version: "7.3", section: "xdebug", option: "xdebug.remote_port", value: "9000"}
+    - {version: "7.3", section: "xdebug", option: "xdebug.max_nesting_level", value: "512"}
   when: aptphp.changed
 
 - name: Set php_executable variable to a default if not defined
@@ -157,7 +160,7 @@
     state: restarted
   loop:
     - php5.6-fpm
-    - php7.2-fpm
+    - php7.3-fpm
   when: aptphp.changed
 
 - name: Restart Apache
