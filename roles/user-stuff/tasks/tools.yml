@@ -91,6 +91,11 @@
     virtualenv: "{{ venvs }}/docker-compose"
     name: docker-compose
 
+- name: Install pipenv
+  pip:
+    virtualenv: "{{ venvs }}/pipenv"
+    name: pipenv
+
 - name: Link pip tools
   file:
     src: "{{ item.src }}"
@@ -103,6 +108,7 @@
     - {src: "{{ venvs }}/aws/bin/aws-shell", dest: "{{ local_bin }}/aws-shell"}
     - {src: "{{ venvs }}/aws/bin/eb", dest: "{{ local_bin }}/eb"}
     - {src: "{{ venvs }}/docker-compose/bin/docker-compose", dest: "{{ local_bin }}/docker-compose"}
+    - {src: "{{ venvs }}/pipenv/bin/pipenv", dest: "{{ local_bin }}/pipenv"}
 
 - name: AWS Docker Credential Helper
   get_url:
