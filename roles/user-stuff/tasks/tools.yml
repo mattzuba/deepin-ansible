@@ -96,6 +96,16 @@
     virtualenv: "{{ venvs }}/pipenv"
     name: pipenv
 
+- name: Install esptool
+  pip:
+    virtualenv: "{{ venvs }}/esptool"
+    name: esptool
+
+- name: Install evtx
+  pip:
+    virtualenv: "{{ venvs }}/evtx"
+    name: python-evtx
+
 - name: Link pip tools
   file:
     src: "{{ item.src }}"
@@ -105,10 +115,13 @@
     - {src: "{{ venvs }}/httpie/bin/http", dest: "{{ local_bin }}/http"}
     - {src: "{{ venvs }}/speedtest/bin/speedtest-cli", dest: "{{ local_bin }}/speedtest-cli"}
     - {src: "{{ venvs }}/aws/bin/aws", dest: "{{ local_bin }}/aws"}
+    - {src: "{{ venvs }}/aws/bin/aws_completer", dest: "{{ local_bin }}/aws_completer"}
+    - {src: "{{ venvs }}/aws/bin/aws_zsh_completer.sh", dest: "{{ local_bin }}/aws_zsh_completer.sh"}
     - {src: "{{ venvs }}/aws/bin/aws-shell", dest: "{{ local_bin }}/aws-shell"}
     - {src: "{{ venvs }}/aws/bin/eb", dest: "{{ local_bin }}/eb"}
     - {src: "{{ venvs }}/docker-compose/bin/docker-compose", dest: "{{ local_bin }}/docker-compose"}
-    - {src: "{{ venvs }}/pipenv/bin/pipenv", dest: "{{ local_bin }}/pipenv"}
+    - {src: "{{ venvs }}/esptool/bin/esptool.py", dest: "{{ local_bin }}/esptool.py"}
+    - {src: "{{ venvs }}/evtx/bin/evtx_dump.py", dest: "{{ local_bin }}/evtx_dump"}
 
 - name: AWS Docker Credential Helper
   get_url:
