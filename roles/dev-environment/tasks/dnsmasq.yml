@@ -1,16 +1,3 @@
-- name: Disable systemd-resolved
-  systemd:
-    name: systemd-resolved
-    state: stopped
-    enabled: no
-  register: resolv
-
-- name: Remove old /etc/resolv.conf file
-  file:
-    path: /etc/resolv.conf
-    state: absent
-  when: resolv.changed
-
 - name: Reconfigure NetworkManager for dnsmasq
   ini_file:
     path: /etc/NetworkManager/NetworkManager.conf
@@ -25,8 +12,3 @@
   loop:
     - local.conf
     - docker-bridge.conf
-
-- name: Reload NetworkManager
-  systemd:
-    name: network-manager
-    state: reloaded

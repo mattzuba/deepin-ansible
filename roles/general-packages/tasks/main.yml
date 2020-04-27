@@ -1,14 +1,5 @@
 - import_tasks: flatpak.yml
-- import_tasks: snaps.yml
 - import_tasks: disable-services.yml
-
-- name: Install dirmngr
-  apt:
-    name: dirmngr
-
-- name: Slack Key
-  apt_key:
-    url: https://packagecloud.io/slacktechnologies/slack/gpgkey
 
 - name: Docker Key
   apt_key:
@@ -18,11 +9,6 @@
   apt_key:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
-- name: Slack Repo
-  apt_repository:
-    repo: deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
-    filename: slack
-
 - name: Docker Repo
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
@@ -30,41 +16,45 @@
 
 - name: VirtualBox Repo
   apt_repository:
-    repo: deb http://download.virtualbox.org/virtualbox/debian stretch contrib
+    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
     filename: virtualbox
+
+- name: Check in Chrome installed
+  stat: 
+    path: /etc/apt/sources.list.d/google-chrome.list
+  register: chrome
 
 - name: Install Chrome
   apt:
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  when: not chrome.stat.exists
 
-- name: Install Gitkraken
-  apt:
-    deb: https://release.gitkraken.com/linux/gitkraken-amd64.deb
+- name: Check in Teamviewer installed
+  stat: 
+    path: /etc/apt/sources.list.d/teamviewer.list
+  register: teamviewer
 
 - name: Install Teamviewer
   apt:
     deb: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+  when: not teamviewer.stat.exists
 
 - name: Install Packages
   apt:
     name:
-      - curl
       - htop
       - dconf-editor
-      - rsyslog
-      - slack-desktop
       - docker-ce
-      - virtualbox-6.0
-      - seahorse
+#      - virtualbox-6.0
       - fonts-powerline
       - anacron
       - telnet
-      - netcat
       - tcpdump
       - ruby
       - ruby-dev
       - inotify-tools
       - moreutils
+      - locate
 
 - name: Source Code Pro fonts
   git:
@@ -78,21 +68,4 @@
   command: fc-cache -f -v
   when: scp.changed
 
-- name: Install virtualenv
-  pip:
-    name: virtualenv
-    executable: pip3
-
-- import_tasks: undervolt.yml
-
-- name: Install mercurial
-  pip:
-    virtualenv: /opt/mercurial
-    virtualenv_python: python
-    name: mercurial
-
-- name: Link mercurial
-  file:
-    src: /opt/mercurial/bin/hg
-    dest: /usr/local/bin/hg
-    state: link
+# - import_tasks: undervolt.yml

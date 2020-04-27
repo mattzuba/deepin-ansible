@@ -1,18 +1,20 @@
-- name: Anacrontab file
-  template:
-    src: anacrontab.j2
-    dest: ~{{ user }}/.local/etc/anacrontab
-
 - name: Create cron directories
   file:
     path: "{{ item }}"
     state: directory
     mode: "0755"
   with_items:
-    - ~{{ user }}/.local/var/spool/anacron
+    - ~{{ user }}/.local/etc/
     - ~{{ user }}/.local/etc/cron.daily
     - ~{{ user }}/.local/etc/cron.weekly
     - ~{{ user }}/.local/etc/cron.monthly
+    - ~{{ user }}/.local/var/spool/anacron
+    - ~{{ user }}/.config/systemd
+
+- name: Anacrontab file
+  template:
+    src: anacrontab.j2
+    dest: ~{{ user }}/.local/etc/anacrontab
 
 - name: Copy anacron.service
   copy:

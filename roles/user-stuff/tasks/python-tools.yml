@@ -1,0 +1,58 @@
+- name: Check if {{ tool.packages | join(", ") }} installed
+  stat: 
+    path: "{{ tool.dir }}/Pipfile"
+  register: pipfile
+
+- name: Install {{ tool.packages | join(", ") }}
+  when: not pipfile.stat.exists
+  block: 
+    - name: Install Python {{ tool.py_version }}
+      command:
+        argv:
+          - ~{{ user }}/.pyenv/bin/pyenv
+          - latest
+          - install
+          - --skip-existing
+          - "{{ tool.py_version }}"
+
+    - name: Get Python {{ tool.py_version }} installed version
+      command:
+        argv:
+          - ~{{ user }}/.pyenv/bin/pyenv
+          - latest
+          - --print-installed
+          - "{{ tool.py_version }}"
+      register: python_version
+
+    - name: Create {{ tool.packages | join(", ") }} directory
+      file:
+        path: "{{ tool.dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Install {{ tool.packages | join(", ") }}
+      command: ~{{ user }}/.pyenv/bin/pyenv exec pipenv install --skip-lock {{ tool.packages | join(" ") }}
+      args:
+        chdir: "{{ tool.dir }}"
+        creates: "{{ tool.dir }}/Pipfile"
+      environment:
+        PYENV_VERSION: "{{ python_version.stdout }}"
+
+    - name: Get virtualenv path for {{ tool.packages | join(", ") }}
+      command:
+        argv:
+            - ~{{ user }}/.pyenv/bin/pyenv
+            - exec
+            - pipenv
+            - --venv
+        chdir: "{{ tool.dir }}"
+      register: venv_path
+      environment:
+        PYENV_VERSION: "{{ python_version.stdout }}"
+
+    - name: Link {{ tool.packages | join(", ") }}
+      file:
+        src: "{{ venv_path.stdout }}/bin/{{ item }}"
+        dest: "{{ local_bin }}/{{ item }}"
+        state: link
+      loop: "{{ tool.bin }}"

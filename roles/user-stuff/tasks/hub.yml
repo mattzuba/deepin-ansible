@@ -1,6 +1,6 @@
 - name: Download hub
   unarchive:
-    src: https://github.com/github/hub/releases/download/v2.12.3/hub-linux-amd64-2.12.3.tgz
+    src: https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
     dest: /tmp
     creates: "{{ local_bin }}/hub"
     remote_src: yes

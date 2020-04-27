@@ -1,3 +1,13 @@
+- name: Sury Key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: B188E2B695BD4743
+
+- name: Apache Repo
+  apt_repository:
+    repo: deb [arch=amd64] https://packages.sury.org/apache2 buster main
+    filename: apache
+
 - name: Install Apache
   apt:
     name:
@@ -6,19 +16,15 @@
 
 - name: Enable rewrite
   apache2_module:
-    name: rewrite
-
-- name: Enable proxy
-  apache2_module:
-    name: proxy_fcgi
-
-- name: Enable maco
-  apache2_module:
-    name: macro
-
-- name: Enable info
-  apache2_module:
-    name: info
+    name: "{{ item }}"
+  loop:
+    - rewrite
+    - proxy_fcgi
+    - macro
+    - info
+    - ssl
+    - headers
+    - setenvif
 
 - name: Restart Apache
   systemd:

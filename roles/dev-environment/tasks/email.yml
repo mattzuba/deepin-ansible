@@ -1,13 +1,32 @@
-- name: Install ssmtp
+- name: Install msmtp
   apt:
-    name: ssmtp
+    name:
+      - msmtp
+      - msmtp-mta
 
-- name: Configure ssmtp
-  ini_file:
-    path: /etc/ssmtp/ssmtp.conf
-    section: null
-    option: mailhub
-    value: 127.0.0.1:1025
+- name: Copy msmtp config file
+  copy:
+    src: /usr/share/doc/msmtp/examples/msmtprc-system.example
+    dest: /etc/msmtprc
+    mode: '0644'
+
+- name: Fix host in msmtp config
+  replace:
+    path: /etc/msmtprc
+    regexp: 'host mailhub\.oursite\.example'
+    replace: 'host 127.0.0.1'
+
+- name: Fix port in msmtp config
+  replace:
+    path: /etc/msmtprc
+    regexp: 'port 465'
+    replace: 'port 1025'
+
+- name: Turn off tls in msmtp config
+  replace:
+    path: /etc/msmtprc
+    regexp: 'tls on'
+    replace: 'tls off'
 
 - name: Install mailhog
   get_url:
@@ -25,13 +44,6 @@
   copy:
     src: mailhog.json
     dest: /etc/mailhog.json
-
-- name: Mailhog run directory
-  file:
-    path: /var/run/mailhog
-    state: directory
-    owner: nobody
-    group: nogroup
 
 - name: Enable mailhog service
   systemd:

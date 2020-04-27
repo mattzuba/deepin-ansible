@@ -7,11 +7,6 @@
     name: flathub
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
-- name: New flatpak.sh profile.d
-  copy:
-    src: flatpak.sh
-    dest: /etc/profile.d/flatpak.sh
-
 - name: Install Flatpaks
   flatpak:
     name: "{{ item }}"
@@ -19,3 +14,30 @@
       - io.github.Pithos
       - org.remmina.Remmina
       - org.gnome.meld
+      - com.getpostman.Postman
+      - org.gimp.GIMP
+      - com.sublimetext.three
+      - org.freedesktop.fwupd
+      - com.toggl.TogglDesktop
+      - com.slack.Slack
+      - com.axosoft.GitKraken
+      - us.zoom.Zoom
+      - org.inkscape.Inkscape
+      - org.filezillaproject.Filezilla
+      - com.bitwarden.desktop
+
+- name: Flatpak service files
+  copy:
+    src: "{{ item }}"
+    dest: /lib/systemd/system/{{ item }}
+  loop:
+    - flatpak-update.service
+    - flatpak-update.timer
+
+- name: Flatpak update service
+  systemd:
+    name: flatpak-update.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started
+

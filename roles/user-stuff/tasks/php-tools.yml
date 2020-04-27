@@ -1,0 +1,30 @@
+- name: Check if {{ tool.package }} installed
+  stat: 
+    path: "{{ tool.dir }}/composer.lock"
+  register: composer
+  no_log: true
+
+- name: Install {{ tool.package }}
+  when: not composer.stat.exists
+  block:
+    - name: Create {{ tool.package }} Directories
+      file:
+        path: "{{ tool.dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Install {{ tool.package }}
+      command:
+        argv: 
+            - /usr/local/bin/composer
+            - require
+            - "{{ tool.package }}"
+        chdir: "{{ tool.dir }}"
+        creates: "{{ tool.dir }}/composer.lock"
+
+    - name: Link {{ tool.package }}
+      file:
+        src: "{{ tool.dir }}/vendor/bin/{{ item }}"
+        dest: "{{ local_bin }}/{{ item }}"
+        state: link
+      loop: "{{ tool.bin }}"
