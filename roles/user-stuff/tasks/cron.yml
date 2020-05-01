@@ -16,21 +16,31 @@
     src: anacrontab.j2
     dest: ~{{ user }}/.local/etc/anacrontab
 
-- name: Copy anacron.service
+- name: Copy systemctl services
   copy:
     src: "{{ item }}"
     dest: ~{{ user }}/.config/systemd/user/
   loop:
     - anacron.service
     - anacron.timer
+    - ansible.timer
 
-- name: Enable anacron
+- name: Ansible service
+  template:
+    src: ansible.service.j2
+    dest: ~{{ user }}/.config/systemd/user/ansible.service
+    mode: "0644"
+
+- name: Enable timers
   systemd:
-    name: anacron.timer
+    name: "{{ item }}.timer"
     daemon_reload: yes
     enabled: yes
     state: started
     scope: user
+  loop:
+    - anacron
+    - ansible
 
 - name: Logrotate
   template:

@@ -1,0 +1,10 @@
+[Unit]
+Description=Trigger ansible-pull every 10 minutes
+
+[Timer]
+# Run every 600 seconds
+OnUnitActiveSec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target

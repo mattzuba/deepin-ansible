@@ -4,6 +4,6 @@ local_bin: "~{{ user }}/.local/bin"
 ansible:
   repo_url: https://github.com/mattzuba/deepin-ansible.git
   work_dir: "~{{ user }}/.local/var/lib/ansible/local"
-  log_file: "~{{ user }}/.local/var/log/ansible-pull.log"
+  log_file: "%h/.local/var/log/ansible-pull.log"
 php_tool_dir: "~{{ user }}/.local/share/phpenvs"
 python_tool_dir: "~{{ user }}/.local/share/pipenvs"
