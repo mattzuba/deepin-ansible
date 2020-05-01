@@ -9,9 +9,6 @@ This installs
 * python-apt in ansible venv
 
 ```
-mkdir -p ~/.local/bin
-sudo adduser mzuba adm
-sudo adduser mzuba staff
 sudo apt update
 sudo apt install -y git curl libreadline-dev libssl-dev libbz2-dev libsqlite3-dev
 ```
@@ -19,6 +16,9 @@ sudo apt install -y git curl libreadline-dev libssl-dev libbz2-dev libsqlite3-de
 then
 
 ```
+mkdir -p ~/.local/bin
+sudo adduser mzuba adm
+sudo adduser mzuba staff
 curl -sL https://pyenv.run | bash
 cat <<'EOF' >> ~/.bashrc
 
@@ -45,7 +45,7 @@ python_version=`pyenv latest --print-installed 3`
 python_version=${python_version%.*}
 mkdir -p ~/.local/share/pipenvs/ansible
 pushd ~/.local/share/pipenvs/ansible
-pipenv install ansible --skip-lock
+pipenv install ansible github3.py cryptography --skip-lock
 venv=`pipenv --venv`
 # https://github.com/ansible/ansible/issues/14468#issuecomment-459630445
 pushd /tmp
@@ -60,5 +60,14 @@ popd
 ln -s `pipenv run which ansible` ~/.local/bin/ansible
 ln -s `pipenv run which ansible-playbook` ~/.local/bin/ansible-playbook
 ln -s `pipenv run which ansible-pull` ~/.local/bin/ansible-pull
+ln -s `pipenv run which ansible-vault` ~/.local/bin/ansible-vault
 popd
 ```
+
+Then export an environment variable:
+
+```
+export ANSIBLE_VAULT_PASSWORD_FILE=<path to vault password file>
+```
+
+Now you can run `ansible-playbook -K local.yml`
