@@ -1,11 +1,6 @@
-- name: Install undervolt
-  pip:
-    virtualenv: /opt/undervolt
-    name: undervolt
-
 - name: Link undervolt
   file:
-    src: /opt/undervolt/bin/undervolt
+    src: "{{ local_bin }}/undervolt"
     dest: /usr/sbin/undervolt
     state: link
 
