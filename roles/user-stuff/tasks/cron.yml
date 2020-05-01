@@ -40,7 +40,7 @@
     scope: user
   loop:
     - anacron
-    - ansible
+#    - ansible
 
 - name: Logrotate
   template:

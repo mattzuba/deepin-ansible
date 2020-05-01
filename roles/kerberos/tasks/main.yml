@@ -39,45 +39,25 @@
     replace: '\1'
     backup: yes
 
-  # https://github.com/ansible/ansible/issues/60497
-- name: Add a comment to deepin-auth-keyboard for next step
-  lineinfile:
-    path: /etc/pam.d/deepin-auth-keyboard
-    line: "# deepin-auth-keyboard"
-    insertbefore: BOF
-
 - name: Remove lsass from Deepin pam.d
   pamd:
     name: deepin-auth-keyboard
-    type: auth
-    control: "[success=2 default=ignore]"
+    type: -auth
+    control: "[success=4 default=ignore]"
     module_path: pam_lsass.so
     state: absent
-
-- name: Adjust pam_unix in Deepin pam.d
-  pamd:
-    name: deepin-auth-keyboard
-    type: auth
-    control: "[success=1 default=ignore]"
-    module_path: pam_unix.so
-    new_control: "[success=2 default=ignore]"
 
 - name: Add sss to Deepin pam.d
   pamd:
     name: deepin-auth-keyboard
     type: auth
-    control: "[success=2 default=ignore]"
+    control: "[success=5 default=ignore]"
     module_path: pam_unix.so
     new_type: auth
-    new_control: "[success=1 default=ignore]"
+    new_control: "[success=4 default=ignore]"
     new_module_path: pam_sss.so
     module_arguments: use_first_pass
     state: after
-
-- name: restart sssd
-  service:
-    name: sssd
-    state: restarted
 
 - name: Connect to AD
   expect:
@@ -86,3 +66,8 @@
     responses:
       (?i)password: "{{ sssd_auth_passwd }}"
   no_log: true
+
+- name: restart sssd
+  service:
+    name: sssd
+    state: restarted

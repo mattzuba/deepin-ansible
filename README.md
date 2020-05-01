@@ -47,7 +47,7 @@ python_version=`pyenv latest --print-installed 3`
 python_version=${python_version%.*}
 mkdir -p ~/.local/share/pipenvs/ansible
 pushd ~/.local/share/pipenvs/ansible
-pipenv install ansible github3.py cryptography psutil --skip-lock
+pipenv install ansible github3.py cryptography psutil pexpect --skip-lock
 venv=`pipenv --venv`
 # https://github.com/ansible/ansible/issues/14468#issuecomment-459630445
 pushd /tmp
