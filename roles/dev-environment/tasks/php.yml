@@ -24,7 +24,7 @@
     vtype: boolean
     value: "true"
 
-- name: Install Packages
+- name: Install PHP Packages
   apt:
     name:
       - php7.3-cli

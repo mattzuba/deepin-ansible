@@ -34,7 +34,6 @@
       command: ~{{ user }}/.pyenv/bin/pyenv exec pipenv install --skip-lock {{ tool.packages | join(" ") }}
       args:
         chdir: "{{ tool.dir }}"
-        creates: "{{ tool.dir }}/Pipfile"
       environment:
         PYENV_VERSION: "{{ python_version.stdout }}"
 

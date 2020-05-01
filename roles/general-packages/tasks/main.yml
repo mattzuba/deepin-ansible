@@ -19,7 +19,7 @@
     repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
     filename: virtualbox
 
-- name: Check in Chrome installed
+- name: Check if Chrome installed
   stat: 
     path: /etc/apt/sources.list.d/google-chrome.list
   register: chrome
@@ -29,7 +29,7 @@
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   when: not chrome.stat.exists
 
-- name: Check in Teamviewer installed
+- name: Check if Teamviewer installed
   stat: 
     path: /etc/apt/sources.list.d/teamviewer.list
   register: teamviewer

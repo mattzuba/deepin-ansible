@@ -11,21 +11,21 @@
   flatpak:
     name: "{{ item }}"
   loop:
-      - io.github.Pithos
-      - org.remmina.Remmina
-      - org.gnome.meld
-      - com.getpostman.Postman
-      - org.gimp.GIMP
-      - com.sublimetext.three
-      - org.freedesktop.fwupd
-      - com.toggl.TogglDesktop
-      - com.slack.Slack
-      - com.axosoft.GitKraken
-      - us.zoom.Zoom
-      - org.inkscape.Inkscape
-      - org.filezillaproject.Filezilla
-      - com.bitwarden.desktop
-      - com.transmissionbt.Transmission
+    - io.github.Pithos
+    - org.remmina.Remmina
+    - org.gnome.meld
+    - com.getpostman.Postman
+    - org.gimp.GIMP
+    - com.sublimetext.three
+    - org.freedesktop.fwupd
+    - com.toggl.TogglDesktop
+    - com.slack.Slack
+    - com.axosoft.GitKraken
+    - us.zoom.Zoom
+    - org.inkscape.Inkscape
+    - org.filezillaproject.Filezilla
+    - com.bitwarden.desktop
+    - com.transmissionbt.Transmission
 
 - name: Flatpak service files
   copy:

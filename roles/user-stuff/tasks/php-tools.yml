@@ -7,7 +7,7 @@
 - name: Install {{ tool.package }}
   when: not composer.stat.exists
   block:
-    - name: Create {{ tool.package }} Directories
+    - name: Create {{ tool.package }} directory
       file:
         path: "{{ tool.dir }}"
         state: directory

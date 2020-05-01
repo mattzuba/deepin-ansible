@@ -15,13 +15,13 @@
 - name: Copy meld helper
   copy:
     src: meld
-    dest: "~{{ user }}/.local/bin/meld"
+    dest: ~{{ user }}/.local/bin/meld
     mode: "0755"
 
 - name: Copy xdebug helper
   copy:
     src: xdebug
-    dest: "~{{ user }}/.local/bin/xdebug"
+    dest: ~{{ user }}/.local/bin/xdebug
     mode: "0755"
 
 - name: Copy sudoers
