@@ -1,0 +1,28 @@
+Host *
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+#    CanonicalizeHostname yes
+#    CanonicalizeFallbackLocal no
+
+Host goodwillaz.org
+    IdentityFile ~/.ssh/aws_webserver.rsa
+    User ubuntu
+
+Host ec2-*
+    User ec2-user
+    IdentityFile ~/.ssh/aws_webserver.rsa
+
+Host *.unum.com
+#Host *.geolearning.com *.unum.com
+    User goodwillaz
+    HostKeyAlgorithms=+ssh-dss
+    Ciphers=+aes256-cbc
+
+Host *.compute.internal
+    User ec2-user
+    IdentityFile ~/.ssh/aws_webserver.rsa
+    ProxyJump ec2-34-215-59-215.us-west-2.compute.amazonaws.com
+
+Host sftp.robart.online
+    User ec2-user
+    IdentityFile ~/.ssh/robart-sftp

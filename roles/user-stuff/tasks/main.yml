@@ -4,13 +4,7 @@
 - import_tasks: node.yml
 - import_tasks: tools.yml
 - import_tasks: jetbrains.yml
-- import_tasks: hub.yml
-
-- name: .zshenv
-  template:
-    src: .zshenv.j2
-    dest: ~{{ user }}/.zshenv
-    mode: "0644"
+- import_tasks: conf-files.yml
 
 - name: Copy meld helper
   copy:

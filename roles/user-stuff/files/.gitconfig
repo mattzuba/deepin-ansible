@@ -1,0 +1,18 @@
+[user]
+	email = matt.zuba@goodwillaz.org
+	name = Matt Zuba
+	signingKey = 827BF109EFF900AFF4C9BC4595D28648C768E199
+[core]
+	excludesfile = /home/mzuba/.gitignore
+[credential]
+	helper = store
+[commit]
+	gpgSign = true
+[merge]
+	ff = only
+[submodule]
+	recurse = true
+[gpg]
+	program = gpg
+[tag]
+	forceSignAnnotated = false

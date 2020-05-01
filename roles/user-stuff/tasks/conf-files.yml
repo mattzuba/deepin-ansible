@@ -1,0 +1,89 @@
+- name: .saml2aws
+  copy:
+    src: .saml2aws
+    dest: ~{{ user }}/.saml2aws
+    mode: "0644"
+
+- name: .gitconfig
+  copy:
+    src: .gitconfig
+    dest: ~{{ user }}/.gitconfig
+    mode: "0644"
+
+- name: .gitignore
+  copy:
+    src: .gitignore
+    dest: ~{{ user }}/.gitignore
+    mode: "0644"
+
+- name: .git-credentials
+  copy:
+    src: .git-credentials
+    dest: ~{{ user }}/.git-credentials
+    mode: "0644"
+
+- name: .tmate.conf
+  copy:
+    src: .tmate.conf
+    dest: ~{{ user }}/.tmate.conf
+    mode: "0644"
+
+- name: .zshenv
+  template:
+    src: .zshenv.j2
+    dest: ~{{ user }}/.zshenv
+    mode: "0644"
+
+- name: Create .ssh directory
+  file:
+    path: ~{{ user }}/.ssh
+    state: directory
+    mode: "0700"
+
+- name: id_ecdsa
+  copy:
+    src: id_ecdsa
+    dest: ~{{ user }}/.ssh/id_ecdsa
+    mode: "0600"
+
+- name: gitkraken_rsa
+  copy:
+    src: gitkraken_rsa
+    dest: ~{{ user }}/.ssh/gitkraken_rsa
+    mode: "0600"
+
+- name: ssh_config
+  copy:
+    src: ssh_config
+    dest: ~{{ user }}/.ssh/config
+    mode: "0600"
+
+- name: Create .config directory
+  file:
+    path: ~{{ user }}/.config
+    state: directory
+    mode: "0755"
+
+- name: hub_config
+  copy:
+    src: hub
+    dest: ~{{ user }}/.config/hub
+    mode: "0600"
+
+- name: Create .aws directory
+  file:
+    path: ~{{ user }}/.aws
+    state: directory
+    mode: "0755"
+
+- name: aws_config
+  copy:
+    src: aws_config
+    dest: ~{{ user }}/.aws/config
+    mode: "0644"
+
+- name: aws_credentials
+  copy:
+    src: aws_credentials
+    dest: ~{{ user }}/.aws/credentials
+    mode: "0600"

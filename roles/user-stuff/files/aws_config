@@ -1,0 +1,13 @@
+[default]
+output = json
+region = us-west-2
+
+[profile robart]
+role_arn = arn:aws:iam::991611338478:role/GWAZ-Admin
+source_profile = saml
+region=us-west-2
+output=json
+
+[profile saml]
+region = us-west-2
+output = json

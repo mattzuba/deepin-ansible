@@ -1,3 +1,6 @@
+- import_tasks: hub.yml
+- import_tasks: tmate.yml
+
 - include_tasks: php-tools.yml
   loop:
     - {package: "squizlabs/php_codesniffer", dir: "{{ php_tool_dir }}/phpcs", bin: ["phpcs"]}

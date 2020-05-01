@@ -29,6 +29,8 @@ fi
 
 export PATH="/home/mzuba/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
+
+export ANSIBLE_VAULT_PASSWORD_FILE="$HOME/.ansible-vault"
 EOF
 exec $SHELL
 ```

@@ -1,0 +1,22 @@
+- name: Download tmate
+  unarchive:
+    src: https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz
+    dest: /tmp
+    creates: "{{ local_bin }}/tmate"
+    remote_src: yes
+  register: tmate
+
+- name: Get tmate dir
+  find:
+    path: /tmp
+    file_type: directory
+    pattern: tmate-*
+  register: tmate_dir
+  when: tmate.changed
+
+- name: Install tmate
+  copy:
+    src: "{{ tmate_dir.files[0].path }}/tmate"
+    dest: "{{ local_bin }}/tmate"
+    mode: "0755"
+  when: tmate.changed

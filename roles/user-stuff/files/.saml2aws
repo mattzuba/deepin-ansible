@@ -1,0 +1,14 @@
+[default]
+app_id               = 
+url                  = https://goodwillaz.okta.com/home/amazon_aws/0oa18v0t994AsSwUQ1d8/272
+username             = mzuba
+provider             = Okta
+mfa                  = TOTP
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 43200
+aws_profile          = saml
+resource_id          = 
+subdomain            = 
+role_arn             = 
