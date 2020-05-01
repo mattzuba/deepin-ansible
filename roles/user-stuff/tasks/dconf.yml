@@ -1,7 +1,5 @@
 - name: GTK Theme
-  dconf:
-    key: "{{ item.key }}"
-    value: "{{ item.value }}"
+  dconf: key={{ item.key }} value={{ item.value }}
   loop:
     - {key: "/com/deepin/dde/appearance/gtk-theme", value: "'deepin-dark'"}
     - {key: "/com/deepin/dde/appearance/icon-theme", value: "'bloom-classic-dark'"}

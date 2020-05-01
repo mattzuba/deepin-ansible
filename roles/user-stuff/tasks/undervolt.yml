@@ -1,20 +1,11 @@
 - name: Link undervolt
-  file:
-    src: "{{ local_bin }}/undervolt"
-    dest: /usr/sbin/undervolt
-    state: link
+  file: src={{ local_bin }}/undervolt dest=/usr/sbin/undervolt state=link
 
 - name: Undervolt service files
-  copy:
-    src: "{{ item }}"
-    dest: /lib/systemd/system/{{ item }}
+  copy: src={{ item }} dest=/lib/systemd/system/{{ item }}
   loop:
     - undervolt.service
     - undervolt.timer
 
 - name: Undervolt service
-  systemd:
-    name: undervolt.timer
-    daemon_reload: yes
-    enabled: yes
-    state: started
+  systemd: name=undervolt.timer daemon_reload=yes enabled=yes state=started

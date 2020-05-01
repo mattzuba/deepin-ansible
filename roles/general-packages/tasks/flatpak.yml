@@ -1,15 +1,11 @@
 - name: Install flatpak
-  apt:
-    name: flatpak
+  apt: name=flatpak
 
 - name: Add Flatpak remote
-  flatpak_remote:
-    name: flathub
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak_remote: name=flathub flatpakrepo_url=https://dl.flathub.org/repo/flathub.flatpakrepo
 
 - name: Install Flatpaks
-  flatpak:
-    name: "{{ item }}"
+  flatpak: name={{ item }}
   loop:
     - io.github.Pithos
     - org.remmina.Remmina
@@ -28,17 +24,11 @@
     - com.transmissionbt.Transmission
 
 - name: Flatpak service files
-  copy:
-    src: "{{ item }}"
-    dest: /lib/systemd/system/{{ item }}
+  copy: src={{ item }} dest=/lib/systemd/system/{{ item }}
   loop:
     - flatpak-update.service
     - flatpak-update.timer
 
 - name: Flatpak update service
-  systemd:
-    name: flatpak-update.timer
-    daemon_reload: yes
-    enabled: yes
-    state: started
+  systemd: name=flatpak-update.timer daemon_reload=yes enabled=yes state=started
 
