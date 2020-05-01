@@ -1,0 +1,17 @@
+- name: GTK Theme
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - {key: "/com/deepin/dde/appearance/gtk-theme", value: "'deepin-dark'"}
+    - {key: "/com/deepin/dde/appearance/icon-theme", value: "'bloom-classic-dark'"}
+    - {key: "/com/deepin/dde/appearance/font-monospace", value: "'Source Code Pro'"}
+    - {key: "/com/deepin/dde/datetime/is-24hour", value: "false"}
+    - {key: "/com/deepin/dde/dock/hide-mode", value: "'smart-hide'"}
+    - {key: "/com/deepin/dde/launcher/fullscreen", value: "true"}
+    - {key: "/com/deepin/dde/network-utils/network-checker-urls", value: "['https://www.google.com/generate_204']"}
+    - {key: "/com/deepin/dde/sound-effect/desktop-login", value: "false"}
+    - {key: "/com/deepin/dde/sound-effect/system-shutdown", value: "false"}
+    - {key: "/com/deepin/dde/sound-effect/suspend-resume", value: "false"}
+    - {key: "/com/deepin/dde/touchpad/horiz-scroll-enabled", value: "true"}
+    - {key: "/com/deepin/dde/touchpad/palm-detect", value: "true"}

@@ -44,6 +44,7 @@
     name:
       - htop
       - dconf-editor
+      - dconf-cli
       - docker-ce
 #      - virtualbox-6.0
       - fonts-powerline
