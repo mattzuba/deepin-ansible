@@ -25,6 +25,7 @@
       - org.inkscape.Inkscape
       - org.filezillaproject.Filezilla
       - com.bitwarden.desktop
+      - com.transmissionbt.Transmission
 
 - name: Flatpak service files
   copy:
