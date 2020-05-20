@@ -1,21 +1,36 @@
-- name: Sury Key
-  apt_key:
-    keyserver: hkp://keyserver.ubuntu.com:80
-    id: B188E2B695BD4743
-
 - name: Microsoft Key
   apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
 
-- name: PHP Repo
-  apt_repository:
-    repo: deb [arch=amd64] https://packages.sury.org/php buster main
-    filename: php
+- name: PHP Repo for Deepin
+  when: ansible_facts['distribution'] == 'Deepin'
+  block:
+    - name: Sury Key
+      apt_key:
+        keyserver: hkp://keyserver.ubuntu.com:80
+        id: B188E2B695BD4743
 
-- name: Microsoft Repo
-  apt_repository:
-    repo: deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main
-    filename: mssql-release
+    - name: PHP Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.sury.org/php buster main
+        filename: php
+
+    - name: Microsoft Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main
+        filename: mssql-release
+
+- name: PHP for Ubuntu
+  when: ansible_facts['distribution'] == 'Ubuntu'
+  block:
+    - name: PHP Repo
+      apt_repository: repo=ppa:ondrej/php
+
+    - name: Microsoft Repo
+      apt_repository:
+        # repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
+        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/19.10/prod eoan main
+        filename: mssql-release
 
 - name: Microsoft Debconf
   debconf:

@@ -1,12 +1,19 @@
-- name: Sury Key
-  apt_key:
-    keyserver: hkp://keyserver.ubuntu.com:80
-    id: B188E2B695BD4743
+- name: Apache Repo for Deepin
+  when: ansible_facts['distribution'] == 'Deepin'
+  block:
+    - name: Sury Key
+      apt_key:
+        keyserver: hkp://keyserver.ubuntu.com:80
+        id: B188E2B695BD4743
 
-- name: Apache Repo
-  apt_repository:
-    repo: deb [arch=amd64] https://packages.sury.org/apache2 buster main
-    filename: apache
+    - name: Apache Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.sury.org/apache2 buster main
+        filename: apache
+
+- name: Apache Repo for Ubuntu
+  apt_repository: repo=ppa:ondrej/apache2
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install Apache
   apt:

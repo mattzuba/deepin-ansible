@@ -3,10 +3,12 @@
 
 - name: Docker Key
   apt_key:
+    id: B9F8D658297AF3EFC18D5CDFA2F683C52980AECF
     url: https://download.docker.com/linux/debian/gpg
 
 - name: VirtualBox Key
   apt_key:
+    id: EB4C1BFD4F042F6DDDCCEC917721F63BD38B4796
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
 - name: Docker Repo

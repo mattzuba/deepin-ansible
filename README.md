@@ -10,15 +10,15 @@ This installs
 
 ```
 sudo apt update
-sudo apt install -y git curl libreadline-dev libssl-dev libbz2-dev libsqlite3-dev
+sudo apt install -y git curl build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev
 ```
 
 then
 
 ```
 mkdir -p ~/.local/bin
-sudo adduser mzuba adm
-sudo adduser mzuba staff
 curl -sL https://pyenv.run | bash
 cat <<'EOF' >> ~/.bashrc
 
@@ -52,11 +52,11 @@ venv=`pipenv --venv`
 # https://github.com/ansible/ansible/issues/14468#issuecomment-459630445
 pushd /tmp
 apt download python3-apt
-dpkg -x python3-apt_1.8.4.1_amd64.deb python3-apt
+dpkg -x python3-apt_2.0.0_amd64.deb python3-apt
 cp -r /tmp/python3-apt/usr/lib/python3/dist-packages/* $venv/lib/python${python_version}/site-packages/
 pushd $venv/lib/python${python_version}/site-packages/
-mv apt_pkg.cpython-37m-x86_64-linux-gnu.so apt_pkg.so
-mv apt_inst.cpython-37m-x86_64-linux-gnu.so apt_inst.so
+mv apt_pkg.cpython-38-x86_64-linux-gnu.so apt_pkg.so
+mv apt_inst.cpython-38-x86_64-linux-gnu.so apt_inst.so
 popd
 popd
 ln -s `pipenv run which ansible` ~/.local/bin/ansible
@@ -64,12 +64,6 @@ ln -s `pipenv run which ansible-playbook` ~/.local/bin/ansible-playbook
 ln -s `pipenv run which ansible-pull` ~/.local/bin/ansible-pull
 ln -s `pipenv run which ansible-vault` ~/.local/bin/ansible-vault
 popd
-```
-
-Then export an environment variable:
-
-```
-export ANSIBLE_VAULT_PASSWORD_FILE=<path to vault password file>
 ```
 
 Now you can run `ansible-playbook -K local.yml`

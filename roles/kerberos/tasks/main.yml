@@ -39,25 +39,39 @@
     replace: '\1'
     backup: yes
 
-- name: Remove lsass from Deepin pam.d
-  pamd:
-    name: deepin-auth-keyboard
-    type: -auth
-    control: "[success=4 default=ignore]"
-    module_path: pam_lsass.so
-    state: absent
+- name: Update pam.d
+  when: ansible_facts['distribution'] == 'Deepin'
+  block:
+    - name: Add sss to Deepin pam.d
+      pamd:
+        name: deepin-auth-keyboard
+        type: -auth
+        control: "[success=4 default=ignore]"
+        module_path: pam_lsass.so
+        new_module_path: pam_sss.so
+        module_arguments: use_first_pass
 
-- name: Add sss to Deepin pam.d
-  pamd:
-    name: deepin-auth-keyboard
-    type: auth
-    control: "[success=5 default=ignore]"
-    module_path: pam_unix.so
-    new_type: auth
-    new_control: "[success=4 default=ignore]"
-    new_module_path: pam_sss.so
-    module_arguments: use_first_pass
-    state: after
+- name: Update pam.d
+  when: ansible_facts['distribution'] == 'Ubuntu'
+  block:
+    - name: Change lsass to unix in Deepin pam.d
+      pamd:
+        name: deepin-auth-keyboard
+        type: auth
+        control: "[success=2 default=ignore]"
+        module_path: pam_lsass.so
+        new_module_path: pam_unix.so
+        module_arguments: nullok_secure use_first_pass
+
+    - name: Change old unix to sss in Deepin pam.d
+      pamd:
+        name: deepin-auth-keyboard
+        type: auth
+        control: "[success=1 default=ignore]"
+        module_path: pam_unix.so
+        new_type: -auth
+        new_module_path: pam_sss.so
+        module_arguments: use_first_pass
 
 - name: Connect to AD
   expect:
