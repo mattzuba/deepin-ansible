@@ -1,35 +1,17 @@
-- name: Create cron directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: "0755"
-  with_items:
-    - ~{{ user }}/.local/etc/
-    - ~{{ user }}/.local/etc/cron.daily
-    - ~{{ user }}/.local/etc/cron.weekly
-    - ~{{ user }}/.local/etc/cron.monthly
-    - ~{{ user }}/.local/var/spool/anacron
-    - ~{{ user }}/.config/systemd
-
-- name: Anacrontab file
-  template:
-    src: anacrontab.j2
-    dest: ~{{ user }}/.local/etc/anacrontab
+- name: Create systemd directory
+  file: path=~{{ user }}/.config/systemd/user/ state=directory mode=0755
 
 - name: Copy systemctl services
   copy:
     src: "{{ item }}"
     dest: ~{{ user }}/.config/systemd/user/
   loop:
-    - anacron.service
-    - anacron.timer
     - ansible.timer
+    - logrotate.service
+    - logrotate.timer
 
 - name: Ansible service
-  template:
-    src: ansible.service.j2
-    dest: ~{{ user }}/.config/systemd/user/ansible.service
-    mode: "0644"
+  template: src=ansible.service.j2 dest=~{{ user }}/.config/systemd/user/ansible.service mode=0644
 
 - name: Enable timers
   systemd:
@@ -39,11 +21,5 @@
     state: started
     scope: user
   loop:
-    - anacron
+    - logrotate
 #    - ansible
-
-- name: Logrotate
-  template:
-    src: logrotate.cron.j2
-    dest: ~{{ user }}/.local/etc/cron.daily/logrotate
-    mode: "0755"

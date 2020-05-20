@@ -1,0 +1,6 @@
+[Unit]
+Description=Run logrotate
+
+[Service]
+ExecCondition=test -x /usr/sbin/logrotate
+ExecStart=/usr/sbin/logrotate -s %h/.local/var/lib/logrotate/status %h/.local/etc/logrotate.conf

@@ -1,9 +1,0 @@
-[Unit]
-Description=Run anacron jobs
-After=time-sync.target
-#ConditionACPower=true
-Documentation=man:anacron man:anacrontab
-
-[Service]
-ExecStart=/usr/sbin/anacron -dsq -t %h/.local/etc/anacrontab -S %h/.local/var/spool/anacron
-IgnoreSIGPIPE=false

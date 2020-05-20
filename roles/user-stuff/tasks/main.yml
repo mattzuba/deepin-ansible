@@ -15,6 +15,9 @@
 - name: Copy xdebug helper
   copy: src=xdebug dest=~{{ user }}/.local/bin/xdebug mode=0755
 
+- name: Create local etc directory
+  file: path=~{{ user }}/.local/etc state=directory mode=0755
+
 - name: Copy logrotate.conf
   template: src=logrotate.conf.j2 dest=~{{ user }}/.local/etc/logrotate.conf
 
