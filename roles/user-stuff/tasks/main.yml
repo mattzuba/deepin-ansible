@@ -5,6 +5,10 @@
 - import_tasks: jetbrains.yml
 - import_tasks: conf-files.yml
 
+- name: Add to groups
+  user: name={{ user }} groups=staff,adm
+  become: yes
+
 - name: Copy sudoers
   template: src=sudoers.j2 dest=/etc/sudoers.d/02_sudoers owner=root group=root mode=0440
   become: yes
