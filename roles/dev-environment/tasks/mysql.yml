@@ -1,4 +1,15 @@
-- name: Install Packages
-  apt:
-    name:
-      - mysql-server
+- name: MySQL Docker Volume
+  docker_volume: volume_name=mysql-data
+
+- name: MySQL Docker Container
+  docker_container:
+    name: mysql-server
+    image: mysql:5.7
+    restart_policy: always
+    volumes:
+      - mysql-data:/var/lib/mysql:rw
+    published_ports:
+      - 127.0.0.1:3306:3306
+    env:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

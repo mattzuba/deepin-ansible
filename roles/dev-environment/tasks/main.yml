@@ -4,6 +4,7 @@
 - import_tasks: email.yml
 - import_tasks: dnsmasq.yml
 - import_tasks: mkcert.yml
+- import_tasks: mysql.yml
 
 - name: Update sysctl
   copy:

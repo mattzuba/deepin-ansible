@@ -6,7 +6,7 @@
 - import_tasks: conf-files.yml
 
 - name: Add to groups
-  user: name={{ user }} groups=staff,adm
+  user: name={{ user }} groups=staff,adm,docker
   become: yes
 
 - name: Copy sudoers
