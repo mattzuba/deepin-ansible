@@ -42,7 +42,7 @@
 - name: Update pam.d
   when: ansible_facts['distribution'] == 'Deepin'
   block:
-    - name: Add sss to Deepin pam.d
+    - name: Add sss to deepin-auth-keyboard
       pamd:
         name: deepin-auth-keyboard
         type: -auth
@@ -54,16 +54,16 @@
 - name: Update pam.d
   when: ansible_facts['distribution'] == 'Ubuntu'
   block:
-    - name: Change lsass to unix in Deepin pam.d
+    - name: Change lsass to unix in deepin-auth-keyboard
       pamd:
         name: deepin-auth-keyboard
         type: auth
         control: "[success=2 default=ignore]"
         module_path: pam_lsass.so
         new_module_path: pam_unix.so
-        module_arguments: nullok_secure use_first_pass
+        module_arguments: use_first_pass
 
-    - name: Change old unix to sss in Deepin pam.d
+    - name: Change old unix to sss in deepin-auth-keyboard
       pamd:
         name: deepin-auth-keyboard
         type: auth
@@ -73,15 +73,33 @@
         new_module_path: pam_sss.so
         module_arguments: use_first_pass
 
-- name: Connect to AD
-  expect:
-    command: adcli join --domain {{ sssd_domain }} --login-user {{ sssd_auth_user }} --domain-ou "{{ sssd_ou }}" --os-name "{{ sssd_os }}" --os-version "{{ sssd_os_version }}"
-    creates: /etc/krb5.keytab
-    responses:
-      (?i)password: "{{ sssd_auth_passwd }}"
-  no_log: true
+    - name: Fix deepin-auth-keyboard in common-auth
+      pamd:
+        name: common-auth
+        type: auth
+        control: "[success=3 default=ignore]"
+        module_path: pam_deepin_auth.so
+        new_type: -auth
 
-- name: restart sssd
-  service:
-    name: sssd
-    state: restarted
+    - name: Fix pam_unix in common-auth
+      pamd:
+        name: common-auth
+        type: auth
+        control: "[success=2 default=ignore]"
+        module_path: pam_unix.so
+        module_arguments: nullok_secure
+        state: args_absent
+
+
+# - name: Connect to AD
+#   expect:
+#     command: adcli join --domain {{ sssd_domain }} --login-user {{ sssd_auth_user }} --domain-ou "{{ sssd_ou }}" --os-name "{{ sssd_os }}" --os-version "{{ sssd_os_version }}"
+#     creates: /etc/krb5.keytab
+#     responses:
+#       (?i)password: "{{ sssd_auth_passwd }}"
+#   no_log: true
+#
+# - name: restart sssd
+#   service:
+#     name: sssd
+#     state: restarted
