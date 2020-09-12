@@ -42,8 +42,8 @@ git clone https://github.com/jawshooah/pyenv-default-packages.git "$(pyenv root)
 git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/xxenv-latest
 echo "pipenv" > $(pyenv root)/default-packages
 pyenv latest install 3
-pyenv global `pyenv latest --print-installed 3`
-python_version=`pyenv latest --print-installed 3`
+pyenv global $(pyenv latest --print-installed 3)
+python_version=$(pyenv latest --print-installed 3)
 python_version=${python_version%.*}
 mkdir -p ~/.local/share/pipenvs/ansible
 pushd ~/.local/share/pipenvs/ansible
@@ -52,11 +52,12 @@ venv=`pipenv --venv`
 # https://github.com/ansible/ansible/issues/14468#issuecomment-459630445
 pushd /tmp
 apt download python3-apt
-dpkg -x python3-apt_2.0.0_amd64.deb python3-apt
+package=$(ls | grep -oP 'python3-apt.*')
+dpkg -x $package python3-apt
 cp -r /tmp/python3-apt/usr/lib/python3/dist-packages/* $venv/lib/python${python_version}/site-packages/
 pushd $venv/lib/python${python_version}/site-packages/
-mv apt_pkg.cpython-38-x86_64-linux-gnu.so apt_pkg.so
-mv apt_inst.cpython-38-x86_64-linux-gnu.so apt_inst.so
+mv apt_pkg.*.so apt_pkg.so
+mv apt_inst.*.so apt_inst.so
 popd
 popd
 ln -s `pipenv run which ansible` ~/.local/bin/ansible
