@@ -1,14 +1,12 @@
-- import_tasks: flatpak.yml
-- import_tasks: disable-services.yml
 
 - name: Docker Key
   apt_key:
-    id: B9F8D658297AF3EFC18D5CDFA2F683C52980AECF
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     url: https://download.docker.com/linux/debian/gpg
 
 - name: VirtualBox Key
   apt_key:
-    id: EB4C1BFD4F042F6DDDCCEC917721F63BD38B4796
+    id: B9F8D658297AF3EFC18D5CDFA2F683C52980AECF
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
 - name: Docker Repo
@@ -59,14 +57,34 @@
       - moreutils
       - locate
 
-- name: Source Code Pro fonts
-  git:
-    depth: 1
-    dest: /usr/share/fonts/opentype/scp
-    repo: https://github.com/adobe-fonts/source-code-pro.git
-    refspec: refs/heads/release
-  register: scp
+- name: Uninstall Packages
+  apt:
+    name:
+      - xserver-xorg-video-nouveau
+    autoremove: yes
+    purge: yes
+    state: absent
 
-- name: Rebuild font-cache
-  command: fc-cache -f -v
-  when: scp.changed
+- name: Buster Backports
+  apt_repository:
+    repo: deb https://deb.debian.org/debian buster-backports main contrib non-free
+    filename: buster-backports
+
+- name: Install nvidia stuff
+  apt:
+    name: 
+      - nvidia-driver
+      - nvidia-settings
+      - nvidia-smi
+      - nvidia-kernel-dkms
+    default_release: buster-backports
+
+- name: nvidia xorg conf
+  copy:
+    content: |
+      Section "ServerLayout"
+        Identifier "layout"
+        Option "AllowNVIDIAGPUScreens"
+      EndSection
+    dest: /etc/X11/xorg.conf.d/00-nvidia.conf
+    mode: 0644

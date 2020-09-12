@@ -1,0 +1,21 @@
+- import_tasks: flatpak.yml
+- import_tasks: disable-services.yml
+- import_tasks: packages.yml
+
+- name: Source Code Pro fonts
+  git:
+    depth: 1
+    dest: /usr/share/fonts/opentype/scp
+    repo: https://github.com/adobe-fonts/source-code-pro.git
+    refspec: refs/heads/release
+  register: scp
+
+- name: Rebuild font-cache
+  command: fc-cache -f -v
+  when: scp.changed
+
+- name: Fix iwlwifi module config
+  copy: src=iwlwifi.conf dest=/etc/modprobe.d/iwlwifi.conf
+
+- name: Blacklist modules that Ubuntu does
+  copy: src=blacklist.conf dest=/etc/modprobe.d/blacklist.conf
