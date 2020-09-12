@@ -28,21 +28,21 @@
 
 - name: Install saml2aws
   unarchive:
-    src: https://github.com/Versent/saml2aws/releases/download/v2.25.0/saml2aws_2.25.0_linux_amd64.tar.gz
+    src: https://github.com/Versent/saml2aws/releases/download/v2.27.0/saml2aws_2.27.0_linux_amd64.tar.gz
     dest: "{{ local_bin }}"
     creates: "{{ local_bin }}/saml2aws"
     remote_src: yes
 
 - name: Install Etcher
   get_url:
-    url: https://github.com/balena-io/etcher/releases/download/v1.5.81/balenaEtcher-1.5.81-x64.AppImage
+    url: https://github.com/balena-io/etcher/releases/download/v1.5.108/balenaEtcher-1.5.108-x64.AppImage
     dest: "{{ local_bin }}/etcher"
     mode: "0755"
-    checksum: sha512:9f97118edf58a3f60478b67ca6bb25b389663f6781b90800a076e500a3c8c4fee6d966ba846ae208a84218e164ffa24c53947431dabc261fe0518351b6ed471f
+    checksum: sha512:774331a2954cf97d76916ff886659a126e6975ff4b4e5f237ee0ad499e476688fc352d0af0c442f6f827ee0ee660020a74f521baf124b169d427c3f0dd3c22f8
 
 - name: Install drone cli
   unarchive:
-    src: https://github.com/drone/drone-cli/releases/download/v1.2.1/drone_linux_amd64.tar.gz
+    src: https://github.com/drone/drone-cli/releases/download/v1.2.2/drone_linux_amd64.tar.gz
     dest: "{{ local_bin }}"
     creates: "{{ local_bin }}/drone"
     remote_src: yes
