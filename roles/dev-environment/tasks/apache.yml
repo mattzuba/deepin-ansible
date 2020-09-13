@@ -34,7 +34,7 @@
     - setenvif
 
 - name: Jarvis
-  copy: src=jarvis.conf dest=/etc/apache/conf-available/jarvis.conf mode=0644
+  copy: src=jarvis.conf dest=/etc/apache2/conf-available/jarvis.conf mode=0644
 
 - name: Enable Jarvis
   command: a2enconf jarvis

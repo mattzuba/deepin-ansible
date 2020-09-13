@@ -9,7 +9,7 @@
       changed_when: False
       become: yes
   roles:
-    - {role: "kerberos", tags: "kerberos", become: yes}
+    # - {role: "kerberos", tags: "kerberos", become: yes}
     - {role: "system-level", tags: "system-level", become: yes}
     - {role: "dev-environment", tags: "dev-environment", become: yes}
     - role: gantsign.oh-my-zsh

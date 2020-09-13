@@ -19,7 +19,7 @@
     repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
     filename: virtualbox
 
-- name: Check if Chrome installed
+- name: Check for Chrome
   stat: 
     path: /etc/apt/sources.list.d/google-chrome.list
   register: chrome
@@ -29,7 +29,7 @@
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   when: not chrome.stat.exists
 
-- name: Check if Teamviewer installed
+- name: Check for Teamviewer
   stat: 
     path: /etc/apt/sources.list.d/teamviewer.list
   register: teamviewer
@@ -39,6 +39,16 @@
     deb: https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
   when: not teamviewer.stat.exists
 
+- name: Check for Discord
+  stat: 
+    path: /usr/bin/discord
+  register: discord
+
+- name: Install Discord
+  apt:
+    deb: https://discord.com/api/download?platform=linux&format=deb
+  when: not discord.stat.exists
+
 - name: Install Packages
   apt:
     name:
@@ -46,7 +56,7 @@
       - dconf-editor
       - dconf-cli
       - docker-ce
-#      - virtualbox-6.0
+      - virtualbox-6.1
       - fonts-powerline
       - anacron
       - telnet
