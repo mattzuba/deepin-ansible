@@ -66,6 +66,7 @@
       - inotify-tools
       - moreutils
       - locate
+      - nmap
 
 - name: Uninstall Packages
   apt:
@@ -75,11 +76,6 @@
     purge: yes
     state: absent
 
-- name: Buster Backports
-  apt_repository:
-    repo: deb https://deb.debian.org/debian buster-backports main contrib non-free
-    filename: buster-backports
-
 - name: Install nvidia stuff
   apt:
     name: 
@@ -87,7 +83,6 @@
       - nvidia-settings
       - nvidia-smi
       - nvidia-kernel-dkms
-    default_release: buster-backports
 
 - name: nvidia xorg conf
   copy:
