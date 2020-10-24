@@ -1,5 +1,6 @@
 - import_tasks: hub.yml
 - import_tasks: tmate.yml
+- import_tasks: aws.yml
 
 - include_tasks: php-tools.yml
   loop:
@@ -15,7 +16,6 @@
   loop:
     - {py_version: 3.8, packages: ["httpie"], dir: "{{ python_tool_dir }}/httpie", bin: ["http"]}
     - {py_version: 3.8, packages: ["speedtest-cli"], dir: "{{ python_tool_dir }}/speedtest", bin: ["speedtest-cli"]}
-    - {py_version: 3.8, packages: ["awscli", "awsebcli", "aws-shell"], dir: "{{ python_tool_dir }}/aws", bin: ["aws", "aws_completer", "aws_zsh_completer.sh", "aws-shell", "eb"]}
     - {py_version: 3.8, packages: ["docker-compose"], dir: "{{ python_tool_dir }}/docker-compose", bin: ["docker-compose"]}
     - {py_version: 3.8, packages: ["undervolt"], dir: "{{ python_tool_dir }}/undervolt", bin: ["undervolt"]}
   loop_control:

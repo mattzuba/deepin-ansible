@@ -1,0 +1,25 @@
+- name: Uninstall Packages
+  apt:
+    name:
+      - xserver-xorg-video-nouveau
+    autoremove: yes
+    purge: yes
+    state: absent
+
+- name: Install nvidia stuff
+  apt:
+    name: 
+      - nvidia-driver
+      - nvidia-settings
+      - nvidia-smi
+      - nvidia-kernel-dkms
+
+- name: nvidia xorg conf
+  copy:
+    content: |
+      Section "ServerLayout"
+        Identifier "layout"
+        Option "AllowNVIDIAGPUScreens"
+      EndSection
+    dest: /etc/X11/xorg.conf.d/00-nvidia.conf
+    mode: 0644

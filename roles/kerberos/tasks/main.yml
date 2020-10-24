@@ -42,54 +42,17 @@
 - name: Update pam.d
   when: ansible_facts['distribution'] == 'Deepin'
   block:
-    - name: Add sss to deepin-auth-keyboard
+    - name: Add sss to common-auth
       pamd:
-        name: deepin-auth-keyboard
-        type: -auth
-        control: "[success=4 default=ignore]"
-        module_path: pam_lsass.so
-        new_module_path: pam_sss.so
-        module_arguments: use_first_pass
-
-- name: Update pam.d
-  when: ansible_facts['distribution'] == 'Ubuntu'
-  block:
-    - name: Change lsass to unix in deepin-auth-keyboard
-      pamd:
-        name: deepin-auth-keyboard
-        type: auth
-        control: "[success=2 default=ignore]"
-        module_path: pam_lsass.so
-        new_module_path: pam_unix.so
-        module_arguments: use_first_pass
-
-    - name: Change old unix to sss in deepin-auth-keyboard
-      pamd:
-        name: deepin-auth-keyboard
+        state: before
+        name: common-auth
         type: auth
         control: "[success=1 default=ignore]"
-        module_path: pam_unix.so
+        module_path: pam_deepin_authentication.so
         new_type: -auth
+        new_control: "[success=2 default=ignore]"
         new_module_path: pam_sss.so
         module_arguments: use_first_pass
-
-    - name: Fix deepin-auth-keyboard in common-auth
-      pamd:
-        name: common-auth
-        type: auth
-        control: "[success=3 default=ignore]"
-        module_path: pam_deepin_auth.so
-        new_type: -auth
-
-    - name: Fix pam_unix in common-auth
-      pamd:
-        name: common-auth
-        type: auth
-        control: "[success=2 default=ignore]"
-        module_path: pam_unix.so
-        module_arguments: nullok_secure
-        state: args_absent
-
 
 - name: Connect to AD
   expect:

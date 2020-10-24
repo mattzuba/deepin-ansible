@@ -1,0 +1,18 @@
+- include_tasks: python-tools.yml
+  loop:
+    - {py_version: 3.8, packages: ["awsebcli", "aws-shell"], dir: "{{ python_tool_dir }}/aws", bin: ["aws-shell", "eb"]}
+  loop_control:
+    loop_var: tool
+
+- name: Download awscli
+  unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp
+    creates: "{{ local_bin }}/aws"
+    remote_src: yes
+  register: aws
+
+- name: Install aws
+  command: /tmp/aws/install -i ~{{ user }}/.local/aws-cli -b {{ local_bin }}
+  when: aws.changed
+
