@@ -2,7 +2,7 @@
 - name: Docker Key
   apt_key:
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-    url: https://download.docker.com/linux/debian/gpg
+    url: https://download.docker.com/linux/ubuntu/gpg
 
 - name: VirtualBox Key
   apt_key:
@@ -13,11 +13,25 @@
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
     filename: docker
+  when: ansible_facts['distribution'] == 'Deepin'
+
+- name: Docker Repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    filename: docker
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: VirtualBox Repo
   apt_repository:
     repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
     filename: virtualbox
+  when: ansible_facts['distribution'] == 'Deepin'
+
+- name: VirtualBox Repo
+  apt_repository:
+    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian focal contrib
+    filename: virtualbox
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Check for Chrome
   stat: 
@@ -58,3 +72,5 @@
       - fonts-powerline
       - tcpdump
       - locate
+      - nmap
+      - telnet

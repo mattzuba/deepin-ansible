@@ -18,3 +18,8 @@
 
 - name: Reload NetworkManager
   systemd: name=network-manager state=reloaded
+  when: ansible_facts['distribution'] == 'Deepin'
+
+- name: Reload NetworkManager
+  systemd: name=NetworkManager state=reloaded
+  when: ansible_facts['distribution'] == 'Ubuntu'

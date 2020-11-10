@@ -37,9 +37,8 @@
     dest: /etc/nsswitch.conf
     regexp: '^(sudoers:\s+files) sss'
     replace: '\1'
-    backup: yes
 
-- name: Update pam.d
+- name: Update Deepin pam.d
   when: ansible_facts['distribution'] == 'Deepin'
   block:
     - name: Add sss to common-auth
@@ -53,6 +52,18 @@
         new_control: "[success=2 default=ignore]"
         new_module_path: pam_sss.so
         module_arguments: use_first_pass
+
+- name: Update Ubuntu pam.d
+  when: ansible_facts['distribution'] == 'Ubuntu'
+  block:
+    - name: Fix sss pam-config
+      replace:
+        dest: /usr/share/pam-configs/sss
+        regexp: 'Priority: \d+'
+        replace: 'Priority: 999'
+
+    - name: Pam Update
+      command: pam-auth-update --package --enable sss
 
 - name: Connect to AD
   expect:

@@ -16,6 +16,8 @@
 
 - name: Fix iwlwifi module config
   copy: src=iwlwifi.conf dest=/etc/modprobe.d/iwlwifi.conf
+  when: ansible_facts['distribution'] == 'Deepin'
 
 - name: Blacklist modules that Ubuntu does
   copy: src=blacklist.conf dest=/etc/modprobe.d/blacklist.conf
+  when: ansible_facts['distribution'] == 'Deepin'

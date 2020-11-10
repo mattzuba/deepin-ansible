@@ -28,8 +28,7 @@
 
     - name: Microsoft Repo
       apt_repository:
-        # repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
-        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/19.10/prod eoan main
+        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
         filename: mssql-release
 
 - name: Microsoft Debconf
@@ -133,12 +132,22 @@
     - pdo_sqlsrv
     - mcrypt
 
+- name: Add PHP config
+  copy:
+    src: gwaz.ini
+    dest: /etc/php/{{ item }}/mods-available/gwaz.ini
+  loop:
+    - 5.6
+    - 7.3
+  when: aptphp.changed
+
 - name: Enable PHP Apache conf
   command: phpenmod -v 7.3 {{ item }}
   loop:
     - sqlsrv
     - pdo_sqlsrv
     - mcrypt
+    - gwaz
 
 - name: Create Log directory
   file:
@@ -157,15 +166,8 @@
   loop:
     - {version: 5.6, option: "env[APPLICATION_ENVIRONMENT]", value: "development"}
     - {version: 7.3, option: "env[APPLICATION_ENVIRONMENT]", value: "development"}
-
-- name: Add PHP config
-  copy:
-    src: gwaz.ini
-    dest: /etc/php/{{ item }}/mods-available/gwaz.ini
-  loop:
-    - 5.6
-    - 7.3
-  when: aptphp.changed
+    - {version: 5.6, option: "env[APPLICATION_ENV]", value: "development"}
+    - {version: 7.3, option: "env[APPLICATION_ENV]", value: "development"}
 
 - name: Edit xdebug.ini
   ini_file:

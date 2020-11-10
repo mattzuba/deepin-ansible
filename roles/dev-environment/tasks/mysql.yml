@@ -6,6 +6,9 @@
     name: mysql-server
     image: mysql:5.7
     restart_policy: always
+    container_default_behavior: no_defaults
+    detach: yes
+    auto_remove: no
     volumes:
       - mysql-data:/var/lib/mysql:rw
     published_ports:

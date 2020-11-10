@@ -30,9 +30,9 @@
 
 - name: Install mailhog
   get_url:
-    url: https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64
+    url: https://github.com/mailhog/MailHog/releases/download/v1.0.1/MailHog_linux_amd64
     dest: /usr/local/bin/mailhog
-    checksum: sha256:ba921e04438e176c474d533447ae64707ffcdd1230f0153f86cb188d348f25c0
+    checksum: sha256:e2ed634ded49929f089b20045581955ed217672078fd86082dd7a6c67c5d09c7
     mode: '0755'
 
 - name: Mailhog systemd unit
