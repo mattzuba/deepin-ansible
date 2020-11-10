@@ -3,6 +3,7 @@ id_provider = proxy
 proxy_lib_name = files
 enumerate = True
 auth_provider = krb5
+krb5_map_user = {{ ansible_env.USER }}:{{ sssd_auth_user }}
 krb5_realm = {{ sssd_domain }}
 krb5_store_password_if_offline = True
 krb5_lifetime = 7d

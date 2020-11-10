@@ -67,7 +67,7 @@
 
 - name: Connect to AD
   expect:
-    command: adcli join --domain {{ sssd_domain }} --login-user {{ sssd_auth_user }} --domain-ou "{{ sssd_ou }}" --os-name "{{ sssd_os }}" --os-version "{{ sssd_os_version }}"
+    command: adcli join --domain {{ sssd_domain }} --login-user {{ sssd_auth_user }} --domain-ou "{{ sssd_ou }}" --os-name "{{ ansible_distribution }}" --os-version "{{ ansible_distribution_version }}"
     creates: /etc/krb5.keytab
     responses:
       (?i)password: "{{ sssd_auth_passwd }}"

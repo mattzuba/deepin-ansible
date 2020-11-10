@@ -11,8 +11,8 @@
     mode: "0644"
 
 - name: .gitignore
-  copy:
-    src: .gitignore
+  template:
+    src: .gitignore.j2
     dest: ~{{ user }}/.gitignore
     mode: "0644"
 

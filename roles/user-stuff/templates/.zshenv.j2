@@ -1,5 +1,5 @@
 # Default user for oh my zsh
-export DEFAULT_USER=mzuba
+export DEFAULT_USER={{ ansible_env.USER }}
 
 # set PATH so it includes user's local bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
