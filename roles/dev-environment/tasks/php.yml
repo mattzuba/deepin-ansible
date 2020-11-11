@@ -21,7 +21,7 @@
         filename: mssql-release
 
 - name: PHP for Ubuntu
-  when: ansible_facts['distribution'] == 'Ubuntu'
+  when: ansible_facts['distribution'] != 'Deepin'
   block:
     - name: PHP Repo
       apt_repository: repo=ppa:ondrej/php

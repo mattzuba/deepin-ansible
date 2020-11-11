@@ -5,14 +5,14 @@
     mode: "0644"
 
 - name: .gitconfig
-  copy:
-    src: .gitconfig
+  template:
+    src: .gitconfig.j2
     dest: ~{{ user }}/.gitconfig
     mode: "0644"
 
 - name: .gitignore
-  template:
-    src: .gitignore.j2
+  copy:
+    src: .gitignore
     dest: ~{{ user }}/.gitignore
     mode: "0644"
 

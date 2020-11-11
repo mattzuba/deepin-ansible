@@ -1,6 +1,6 @@
 - include_tasks: python-tools.yml
   loop:
-    - {py_version: 3.8, packages: ["awsebcli", "aws-shell"], dir: "{{ python_tool_dir }}/aws", bin: ["aws-shell", "eb"]}
+    - {py_version: 3.9, packages: ["awsebcli", "aws-shell"], dir: "{{ python_tool_dir }}/aws", bin: ["aws-shell", "eb"]}
   loop_control:
     loop_var: tool
 

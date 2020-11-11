@@ -1,8 +1,10 @@
-- name: Disable Services
-  systemd:
-    name: "{{ item }}"
-    state: stopped
-    enabled: no
-  loop:
-    - smbd
-    - nmbd
+- block:
+  - name: Disable Services
+    systemd:
+      name: "{{ item }}"
+      state: stopped
+      enabled: no
+    loop:
+      - smbd
+      - nmbd
+  ignore_errors: yes

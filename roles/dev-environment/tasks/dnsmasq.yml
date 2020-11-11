@@ -1,5 +1,10 @@
 - name: Disable systemd-resolved
   systemd: name=systemd-resolved state=stopped enabled=no
+  register: resolved
+
+- name: Remove systemd-resolved resolv.conf
+  file: path=/etc/resolv.conf state=absent
+  when: resolved.changed
 
 - name: Reconfigure NetworkManager for dnsmasq
   ini_file:
@@ -22,4 +27,4 @@
 
 - name: Reload NetworkManager
   systemd: name=NetworkManager state=reloaded
-  when: ansible_facts['distribution'] == 'Ubuntu'
+  when: ansible_facts['distribution'] != 'Deepin'

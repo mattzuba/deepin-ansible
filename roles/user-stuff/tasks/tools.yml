@@ -14,10 +14,10 @@
 
 - include_tasks: python-tools.yml
   loop:
-    - {py_version: 3.8, packages: ["httpie"], dir: "{{ python_tool_dir }}/httpie", bin: ["http"]}
-    - {py_version: 3.8, packages: ["speedtest-cli"], dir: "{{ python_tool_dir }}/speedtest", bin: ["speedtest-cli"]}
-    - {py_version: 3.8, packages: ["docker-compose"], dir: "{{ python_tool_dir }}/docker-compose", bin: ["docker-compose"]}
-    - {py_version: 3.8, packages: ["undervolt"], dir: "{{ python_tool_dir }}/undervolt", bin: ["undervolt"]}
+    - {py_version: 3.9, packages: ["httpie"], dir: "{{ python_tool_dir }}/httpie", bin: ["http"]}
+    - {py_version: 3.9, packages: ["speedtest-cli"], dir: "{{ python_tool_dir }}/speedtest", bin: ["speedtest-cli"]}
+    - {py_version: 3.9, packages: ["docker-compose"], dir: "{{ python_tool_dir }}/docker-compose", bin: ["docker-compose"]}
+    - {py_version: 3.9, packages: ["undervolt"], dir: "{{ python_tool_dir }}/undervolt", bin: ["undervolt"]}
   loop_control:
     loop_var: tool
 
@@ -32,13 +32,6 @@
     dest: "{{ local_bin }}"
     creates: "{{ local_bin }}/saml2aws"
     remote_src: yes
-
-- name: Install Etcher
-  get_url:
-    url: https://github.com/balena-io/etcher/releases/download/v1.5.108/balenaEtcher-1.5.108-x64.AppImage
-    dest: "{{ local_bin }}/etcher"
-    mode: "0755"
-    checksum: sha512:774331a2954cf97d76916ff886659a126e6975ff4b4e5f237ee0ad499e476688fc352d0af0c442f6f827ee0ee660020a74f521baf124b169d427c3f0dd3c22f8
 
 - name: Install drone cli
   unarchive:

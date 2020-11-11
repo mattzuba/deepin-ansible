@@ -9,6 +9,8 @@
     - ansible.timer
     - logrotate.service
     - logrotate.timer
+    - flatpak-update.service
+    - flatpak-update.timer
 
 - name: Ansible service
   template: src=ansible.service.j2 dest=~{{ user }}/.config/systemd/user/ansible.service mode=0644
@@ -23,3 +25,4 @@
   loop:
     - logrotate
     - ansible
+    - flatpak-update

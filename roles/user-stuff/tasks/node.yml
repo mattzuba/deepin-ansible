@@ -1,5 +1,5 @@
 - name: Install nvm
-  shell: wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  shell: wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
   args:
     creates: "~{{ user }}/.nvm/nvm.sh"
     warn: false

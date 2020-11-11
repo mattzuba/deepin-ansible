@@ -3,4 +3,4 @@ Description=Flatpak update
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/flatpak update -y
+ExecStart=/usr/bin/flatpak update --user -y
