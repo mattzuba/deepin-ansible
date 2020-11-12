@@ -34,13 +34,11 @@
   when: ansible_facts['distribution'] != 'Deepin'
 
 - name: Check for Chrome
-  stat: 
-    path: /etc/apt/sources.list.d/google-chrome.list
+  stat: path=/etc/apt/sources.list.d/google-chrome.list
   register: chrome
 
 - name: Install Chrome
-  apt:
-    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  apt: deb=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   when: not chrome.stat.exists
 
 - name: Install Packages
@@ -54,3 +52,5 @@
       - locate
       - nmap
       - telnet
+      - network-manager-l2tp-gnome
+      - network-manager-openconnect-gnome
