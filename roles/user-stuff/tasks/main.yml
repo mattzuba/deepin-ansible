@@ -6,7 +6,7 @@
 #- import_tasks: dconf.yml
 
 - name: Add to groups
-  user: name={{ user }} groups=staff,adm,docker append=yes
+  user: name={{ user }} groups=staff,adm,docker,vboxusers append=yes
   become: yes
 
 - name: Copy sudoers
