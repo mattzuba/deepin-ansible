@@ -2,6 +2,7 @@
 - import_tasks: cron.yml
 - import_tasks: node.yml
 - import_tasks: tools.yml
+- import_tasks: jetbrains.yml
 - import_tasks: conf-files.yml
 #- import_tasks: dconf.yml
 
