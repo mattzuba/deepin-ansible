@@ -41,6 +41,9 @@
   apt: deb=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   when: not chrome.stat.exists
 
+- name: Timeshift Repo
+  apt_repository: repo=ppa:teejee2008/timeshift
+
 - name: Install Packages
   apt:
     name:
@@ -54,3 +57,4 @@
       - telnet
       - network-manager-l2tp-gnome
       - network-manager-openconnect-gnome
+      - timeshift
