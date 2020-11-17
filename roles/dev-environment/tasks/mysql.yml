@@ -1,6 +1,14 @@
 - name: MySQL Docker Volume
   docker_volume: volume_name=mysql-data
 
+- name: MySQL socket directory
+  file:
+    path: /var/run/mysqld
+    owner: root
+    group: root
+    state: directory
+    mode: "0777"
+
 - name: MySQL Docker Container
   docker_container:
     name: mysql-server
@@ -11,6 +19,7 @@
     auto_remove: no
     volumes:
       - mysql-data:/var/lib/mysql:rw
+      - /var/run/mysqld:/var/run/mysqld:rw
     published_ports:
       - 127.0.0.1:3306:3306
     env:
