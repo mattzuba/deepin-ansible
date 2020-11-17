@@ -1,7 +1,3 @@
-- name: Microsoft Key
-  apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-
 - name: PHP Repo for Deepin
   when: ansible_facts['distribution'] == 'Deepin'
   block:
@@ -15,21 +11,11 @@
         repo: deb [arch=amd64] https://packages.sury.org/php buster main
         filename: php
 
-    - name: Microsoft Repo
-      apt_repository:
-        repo: deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main
-        filename: mssql-release
-
 - name: PHP for Ubuntu
   when: ansible_facts['distribution'] != 'Deepin'
   block:
     - name: PHP Repo
       apt_repository: repo=ppa:ondrej/php
-
-    - name: Microsoft Repo
-      apt_repository:
-        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
-        filename: mssql-release
 
 - name: Microsoft Debconf
   debconf:

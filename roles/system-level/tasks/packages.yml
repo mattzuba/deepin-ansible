@@ -9,29 +9,46 @@
     id: B9F8D658297AF3EFC18D5CDFA2F683C52980AECF
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
-- name: Docker Repo
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
-    filename: docker
+- name: Microsoft Key
+  apt_key:
+    id: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    url: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Repo for Deepin
   when: ansible_facts['distribution'] == 'Deepin'
+  block:
+    - name: Docker Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+        filename: docker
 
-- name: Docker Repo
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-    filename: docker
+    - name: VirtualBox Repo
+      apt_repository:
+        repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
+        filename: virtualbox
+
+    - name: Microsoft Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main
+        filename: mssql-release
+
+- name: Repo for Not Deepin
   when: ansible_facts['distribution'] != 'Deepin'
+  block:
+    - name: Docker Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        filename: docker
 
-- name: VirtualBox Repo
-  apt_repository:
-    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian buster contrib
-    filename: virtualbox
-  when: ansible_facts['distribution'] == 'Deepin'
+    - name: VirtualBox Repo
+      apt_repository:
+        repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian focal contrib
+        filename: virtualbox
 
-- name: VirtualBox Repo
-  apt_repository:
-    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian focal contrib
-    filename: virtualbox
-  when: ansible_facts['distribution'] != 'Deepin'
+    - name: Microsoft Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
+        filename: mssql-release
 
 - name: Check for Chrome
   stat: path=/etc/apt/sources.list.d/google-chrome.list
