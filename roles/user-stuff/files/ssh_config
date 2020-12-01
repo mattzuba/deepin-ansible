@@ -26,3 +26,7 @@ Host *.compute.internal
 Host sftp.robart.online
     User ec2-user
     IdentityFile ~/.ssh/robart-sftp
+
+Host *.gwaz.org
+    User mzuba
+    IdentityFile ~/.ssh/id_ecdsa
