@@ -11,6 +11,8 @@
     - logrotate.timer
     - flatpak-update.service
     - flatpak-update.timer
+    - wallpaper.service
+    - wallpaper.timer
 
 - name: Ansible service
   template: src=ansible.service.j2 dest=~{{ user }}/.config/systemd/user/ansible.service mode=0644
@@ -26,3 +28,4 @@
     - logrotate
 #    - ansible
     - flatpak-update
+    - wallpaper

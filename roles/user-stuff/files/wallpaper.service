@@ -1,0 +1,7 @@
+[Unit]
+Description=Run wallpaper changer
+
+[Service]
+ExecCondition=/bin/bash -c 'while ! ping -c1 google.com; do sleep 1; done'
+ExecStart=%h/.local/bin/bing-wallpaper-changer.py
+Type=oneshot
