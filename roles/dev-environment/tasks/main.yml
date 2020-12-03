@@ -5,6 +5,7 @@
 - import_tasks: dnsmasq.yml
 - import_tasks: mkcert.yml
 - import_tasks: mysql.yml
+- import_tasks: mitmproxy.yml
 
 - name: Update sysctl
   copy:
