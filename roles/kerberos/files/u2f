@@ -1,0 +1,6 @@
+Name: U2F authentication
+Default: yes
+Priority: 999
+Auth-Type: Primary
+Auth:
+	[success=end default=ignore]	pam_u2f.so openasuser cue interactive

@@ -6,6 +6,7 @@
       - krb5-user
       - samba
       - sssd
+      - libpam-u2f
 
 - name: Create sssd.conf
   template:
@@ -77,3 +78,9 @@
   service:
     name: sssd
     state: restarted
+
+- name: Copy U2F pam config
+  copy: src=u2f dest=/usr/share/pam-configs/u2f
+
+- name: U2F Pam Update
+  command: pam-auth-update --package --enable u2f

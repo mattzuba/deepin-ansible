@@ -1,5 +1,6 @@
 [libdefaults]
 default_realm = {{ sssd_domain }}
+default_ccache_name = %{TEMP}/krb5cc_%{username}
 
 [realms]
 {{ sssd_domain }} = {

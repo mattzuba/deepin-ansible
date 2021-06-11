@@ -46,3 +46,6 @@
     dest: "{{ local_bin }}/docker-credential-ecr-login"
     checksum: sha256:https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.4.0/linux-amd64/docker-credential-ecr-login.sha256
     mode: "0755"
+
+- name: Copy zsh aliases
+  copy: src=aliases.zsh dest=~{{ user }}/.oh-my-zsh/custom/aliases.zsh
