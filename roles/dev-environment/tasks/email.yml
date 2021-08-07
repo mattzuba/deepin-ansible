@@ -13,14 +13,14 @@
 - name: Fix host in msmtp config
   replace:
     path: /etc/msmtprc
-    regexp: 'host mailhub\.oursite\.example'
+    regexp: 'host mail\.oursite\.example'
     replace: 'host 127.0.0.1'
 
 - name: Fix port in msmtp config
   replace:
     path: /etc/msmtprc
     regexp: 'port 465'
-    replace: 'port 1025'
+    replace: 'port 25'
 
 - name: Turn off tls in msmtp config
   replace:
@@ -28,26 +28,14 @@
     regexp: 'tls on'
     replace: 'tls off'
 
-- name: Install mailhog
-  get_url:
-    url: https://github.com/mailhog/MailHog/releases/download/v1.0.1/MailHog_linux_amd64
-    dest: /usr/local/bin/mailhog
-    checksum: sha256:e2ed634ded49929f089b20045581955ed217672078fd86082dd7a6c67c5d09c7
-    mode: '0755'
-
-- name: Mailhog systemd unit
-  copy:
-    src: mailhog.service
-    dest: /lib/systemd/system/mailhog.service
-
-- name: Mailhog config
-  copy:
-    src: mailhog.json
-    dest: /etc/mailhog.json
-
-- name: Enable mailhog service
-  systemd:
+- name: Mailhog Docker Container
+  docker_container:
     name: mailhog
-    daemon_reload: yes
-    enabled: yes
-    state: started
+    image: mailhog/mailhog
+    restart_policy: always
+    container_default_behavior: no_defaults
+    detach: yes
+    auto_remove: no
+    published_ports:
+      - 127.0.0.1:25:1025
+      - 127.0.0.1:8025:8025
