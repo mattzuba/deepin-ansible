@@ -26,3 +26,4 @@
     - org.flameshot.Flameshot
     - com.uploadedlobster.peek
     - com.bitwarden.desktop
+    - com.prusa3d.PrusaSlicer

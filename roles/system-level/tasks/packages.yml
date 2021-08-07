@@ -37,17 +37,17 @@
   block:
     - name: Docker Repo
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu hirsute stable
         filename: docker
 
     - name: VirtualBox Repo
       apt_repository:
-        repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian focal contrib
+        repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian hirsute contrib
         filename: virtualbox
 
     - name: Microsoft Repo
       apt_repository:
-        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main
+        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/21.04/prod hirsute main
         filename: mssql-release
 
 - name: Check for Chrome
@@ -60,6 +60,9 @@
 
 - name: Timeshift Repo
   apt_repository: repo=ppa:teejee2008/timeshift
+
+- name: OBS Studio Repo
+  apt_repository: repo=ppa:obsproject/obs-studio
 
 - name: Install Packages
   apt:
@@ -75,3 +78,4 @@
       - network-manager-l2tp-gnome
       - network-manager-openconnect-gnome
       - timeshift
+      - obs-studio
