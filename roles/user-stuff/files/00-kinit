@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ ! -f /home/mzuba/.krb5/mzuba.keytab ] && exit 1
+
+actions=("up vpn-up")
+
+if [[ ! " ${actions[@]} " =~ " ${2} " ]]; then
+  exit
+fi
+
+connections=("e037a435-ddfb-4488-ab49-88483171bda6 9448c043-64b3-4c8b-bf42-bfa8ef5e47e6 46984c2b-497f-4c7b-8d41-8b16aa385cd3")
+
+if [[ ! " ${connections[@]} " =~ " ${CONNECTION_UUID} " ]]; then
+  exit
+fi
+
+# For creating keytab: https://kb.iu.edu/d/aumh
+kinit mzuba@GWAZ.ORG -R -k -t /home/mzuba/.krb5/mzuba.keytab

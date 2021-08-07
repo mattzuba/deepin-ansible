@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+#   Run NeworkManager dispatcher scripts from user home directories
+#   See: https://developer.gnome.org/NetworkManager/stable/NetworkManager.html
+#   See: https://unix.stackexchange.com/q/405242
+#
+
+for user in $(ls /home); do
+  scripts_dir="/home/${user}/.config/NetworkManager/dispatcher.d"
+  [ ! -d "$scripts_dir" ] && continue
+  find $scripts_dir -type f -executable -user $user -perm -u+rwx ! -perm /go+w ! -perm /+s | \
+    sort | \
+    xargs -I{} sudo -u $user --set-home --preserve-env -- {} $1 $2
+done

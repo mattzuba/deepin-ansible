@@ -34,3 +34,9 @@
 
 - name: Setup log directory
   file: path=~{{ user }}/.local/var/log state=directory mode=0755
+
+- name: Create NetworkManager dispatcher.d directory
+  file: path=~{{ user }}/.config/NetworkManager/dispatcher.d state=directory mode=0755
+
+- name: Add kinit script
+  copy: src=00-kinit dest=~{{ user }}/.config/NetworkManager/dispatcher.d mode=0755

@@ -20,3 +20,9 @@
 - name: Blacklist modules that Ubuntu does
   copy: src=blacklist.conf dest=/etc/modprobe.d/blacklist.conf
   when: ansible_facts['distribution'] == 'Deepin'
+
+- name: MAC randomization
+  copy: src=00-macrandomize.conf dest=/etc/NetworkManager/conf.d/00-macrandomize.conf
+
+- name: NetworkManager User Scripts
+  copy: src=99-user-scripts dest=/etc/NetworkManager/dispatcher.d/99-user-scripts mode=0755
