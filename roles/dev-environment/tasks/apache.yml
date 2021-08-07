@@ -11,9 +11,9 @@
         repo: deb [arch=amd64] https://packages.sury.org/apache2 buster main
         filename: apache
 
-# - name: Apache Repo for Ubuntu
-#   apt_repository: repo=ppa:ondrej/apache2
-#   when: ansible_facts['distribution'] == 'Ubuntu'
+- name: Apache Repo for Ubuntu
+  apt_repository: repo=ppa:ondrej/apache2
+  when: ansible_facts['distribution'] != 'Deepin'
 
 - name: Install Apache
   apt:
@@ -38,6 +38,9 @@
 
 - name: Enable Jarvis
   command: a2enconf jarvis
+
+- name: Disable default sites
+  command: a2dissite 000-default
 
 - name: Restart Apache
   systemd:
