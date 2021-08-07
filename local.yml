@@ -20,4 +20,3 @@
             theme: agnoster
             plugins: ["git", "aws", "docker", "npm", "pip", "python", "hub"]
     - {role: "user-stuff", tags: "user-stuff"}
-#    - {role: "nvidia", tags: "nvidia", become: yes}
