@@ -4,10 +4,10 @@
 - name: MySQL socket directory
   file:
     path: /var/run/mysqld
-    owner: root
-    group: root
+    owner: 999
+    group: 999
     state: directory
-    mode: "0777"
+    mode: "0755"
 
 - name: MySQL Docker Container
   docker_container:
